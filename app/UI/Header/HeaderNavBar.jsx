@@ -5,9 +5,15 @@ const HeaderNavBar = () => {
   return (
     <div>
       <ul className="flex gap-4">
-        <Link href="/movies">Movies</Link>
-        <Link href="/tv">TV</Link>
-        <Link href="/music">Music</Link>
+        <Link className=" hover:underline underline-offset-2" href="/movies">
+          Movies
+        </Link>
+        <Link className=" hover:underline underline-offset-2" href="/tv">
+          TV
+        </Link>
+        <Link className=" hover:underline underline-offset-2" href="/music">
+          Music
+        </Link>
       </ul>
     </div>
   );
