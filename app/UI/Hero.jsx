@@ -39,6 +39,14 @@ const Hero = () => {
         className="rounded-lg shadow-md"
         priority
       />
+      <div>
+        <Link
+          className="px-4 py-2 text-black transition border-2 border-black rounded hover:bg-black hover:text-white"
+          href="/movies"
+        >
+          Movies
+        </Link>
+      </div>
     </div>
   );
 };
