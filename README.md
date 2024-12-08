@@ -1,37 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+ReflectYr
 
-## Getting Started
+ReflectYr is a personalized year-in-review app designed to help users reflect on and curate their favorite movies, TV shows, music, and books from the past year. It’s a sleek, user-first platform that empowers you to own your story and share it with friends—or keep it just for yourself.
 
-First, run the development server:
+Built with the Next.js App Router and modern tools like TailwindCSS, Heroicons, and Prisma, ReflectYr combines a clean user experience with the latest in web development.
 
-```bash
+Getting Started
+
+To run ReflectYr locally, follow these steps: Clone the repository and install dependencies, then start the development server:
+git clone
+cd reflectyr
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Or, if you’re using another package manager:
+yarn install && yarn dev
+pnpm install && pnpm dev
+bun install && bun dev
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser to see the app in action.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Editing the App
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+You can start editing the app by modifying the main entry point: app/page.jsx (or app/page.tsx if using TypeScript). The app will hot-reload automatically when you save your changes.
 
-## Learn More
+Features
 
-To learn more about Next.js, take a look at the following resources:
+Current
+• Curate Your Year: Add your favorite movies, music, TV shows, and books to your list.
+• Reorder and Customize: Organize your picks however you want.
+• Dynamic Icons and Light/Dark Mode: Includes dynamic SVG icons (like the clock) that adapt to your system’s light/dark mode.
+• Visual Sharable Recaps: Export your recap as a beautiful social media post or PDF.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Coming Soon
+• User Accounts: Save your year-in-review and revisit it anytime.
+• More Media Categories: Expand your list with games, podcasts, and more.
+• Friends’ Lists: Compare your favorites with your friends.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tech Stack
 
-## Deploy on Vercel
+ReflectYr uses a modern web stack, making it lightweight, scalable, and easy to deploy:
+• Next.js: React framework with App Router and server-side rendering.
+• TailwindCSS: Utility-first styling for a fast, responsive UI.
+• Heroicons: Beautiful, reusable icons (e.g., clock, arrow-path).
+• Prisma: Database ORM for clean and efficient database management.
+• Vercel: Seamless hosting and deployment for Next.js apps.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Using Dynamic Icons
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# ReflectYr
+This app integrates Heroicons dynamically with light/dark mode support. Icons are stored in the src/components/icons folder and are imported as React components. For example, to use the ClockIcon:
+import { ClockIcon } from ‘@/components/icons/Icons’;
+export default function Example() {
+return ;
+}
+
+Learn More
+
+Resources to learn more about the tools used in ReflectYr:
+• Next.js Documentation: Learn about Next.js features and APIs.
+• Next.js Interactive Tutorial: A beginner-friendly guide to building Next.js apps.
+• TailwindCSS Documentation: Learn how to style your components with utility-first classes.
+• Heroicons: Explore the icons used in the app.
+• Prisma Documentation: Understand database management with Prisma.
+
+Deploying ReflectYr
+
+The easiest way to deploy ReflectYr is through Vercel, the creators of Next.js. You can deploy the app directly from your GitHub repository by linking it to https://vercel.com/new
+
+For more details, visit the official Next.js deployment documentation at https://nextjs.org/docs/app/building-your-application/deploying
+
+Contributing
+
+Feedback, issues, and contributions are welcome! Feel free to fork the repository, open an issue, or submit a pull request.
+
+License
+
+Copyright (c) 2024 Trevor Brown
+
+All rights reserved. This software and associated documentation files (the “Software”) are the sole property of Trevor Brown. Permission is not granted to use, copy, modify, merge, publish, distribute, sublicense, or sell copies of the Software, except with the prior written consent of Trevor Brown.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+For inquiries regarding usage, licensing, or partnerships, please contact: trevor.brown@gmail.com.
