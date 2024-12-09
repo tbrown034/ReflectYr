@@ -1,7 +1,13 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["picsum.photos"], // Add allowed external image domains here
+    remotePatterns: [
+      {
+        protocol: "https", // Protocol of the external image
+        hostname: "picsum.photos", // Domain of the external image
+        port: "", // Optional, if your images are served on a specific port
+        pathname: "/**", // Allows all paths under picsum.photos
+      },
+    ],
   },
 };
 
