@@ -46,3 +46,19 @@ export async function fetchSearchResults(query, page) {
   const data = await response.json();
   return data.results || [];
 }
+
+// Fetch movie details by ID
+export async function fetchMovieDetails(movieId) {
+  const url = `${baseUrl}/movie/${movieId}?language=${language}`;
+
+  const response = await fetch(url, {
+    headers: { Authorization: `Bearer ${apiKey}` },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch movie details for ID: ${movieId}`);
+  }
+
+  const data = await response.json();
+  return data;
+}
