@@ -6,6 +6,7 @@ import SearchBar from "@/app/UI/components/SearchBar";
 import PaginationControls from "@/app/UI/components/PaginationControls";
 import FullList from "./components/FullList";
 import SearchList from "./components/SearchList";
+import UserList from "./components/UserList";
 import { fetchDiscoverMovies, fetchSearchResults } from "@/app/api/movies";
 
 export default async function MoviesPage({ searchParams }) {
@@ -22,6 +23,7 @@ export default async function MoviesPage({ searchParams }) {
       <SearchBar />
       {query ? <SearchList movies={movies} /> : <FullList movies={movies} />}
       <PaginationControls currentPage={page} />
+      <UserList /> {/* UserList added to the page */}
     </main>
   );
 }
