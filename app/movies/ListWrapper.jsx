@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchBar from "@/app/UI/components/SearchBar";
 import PaginationControls from "@/app/UI/components/PaginationControls";
 import UserList from "./UserList/UserList";
@@ -10,16 +10,24 @@ import SearchList from "./MoviesList/SearchList";
 export default function ListWrapper({ movies, query, currentPage }) {
   const [userList, setUserList] = useState([]);
 
+  // Load user list from localStorage on initial render
+  useEffect(() => {
+    const storedList = JSON.parse(localStorage.getItem("userList") || "[]");
+    setUserList(storedList);
+  }, []);
+
   // Add a movie to the user's list
   const addToUserList = (movie) => {
-    setUserList((prevList) =>
-      prevList.some((m) => m.id === movie.id) ? prevList : [...prevList, movie]
-    );
+    const updatedList = [...userList, movie];
+    setUserList(updatedList);
+    localStorage.setItem("userList", JSON.stringify(updatedList));
   };
 
   // Remove a movie from the user's list
   const removeMovie = (movieId) => {
-    setUserList((prevList) => prevList.filter((movie) => movie.id !== movieId));
+    const updatedList = userList.filter((movie) => movie.id !== movieId);
+    setUserList(updatedList);
+    localStorage.setItem("userList", JSON.stringify(updatedList));
   };
 
   // Move a movie up in the user's list
@@ -31,6 +39,7 @@ export default function ListWrapper({ movies, query, currentPage }) {
       updatedList[index - 1],
     ];
     setUserList(updatedList);
+    localStorage.setItem("userList", JSON.stringify(updatedList));
   };
 
   // Move a movie down in the user's list
@@ -42,6 +51,7 @@ export default function ListWrapper({ movies, query, currentPage }) {
       updatedList[index + 1],
     ];
     setUserList(updatedList);
+    localStorage.setItem("userList", JSON.stringify(updatedList));
   };
 
   return (

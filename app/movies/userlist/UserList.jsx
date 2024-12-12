@@ -39,7 +39,7 @@ export default function UserList({ userList, removeMovie, moveUp, moveDown }) {
                   onMoveDown={
                     index < userList.length - 1 ? () => moveDown(index) : null
                   }
-                  onRemove={() => removeMovie(index)}
+                  onRemove={() => removeMovie(movie.id)}
                 />
               </div>
             )}
