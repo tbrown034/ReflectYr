@@ -2,12 +2,8 @@
 // Type: Server Component
 // Purpose: Handles main movies page and fetches data based on search or default criteria.
 
-import SearchBar from "@/app/UI/components/SearchBar";
-import PaginationControls from "@/app/UI/components/PaginationControls";
-import FullList from "./components/FullList";
-import SearchList from "./components/SearchList";
-import UserList from "./components/UserList";
 import { fetchDiscoverMovies, fetchSearchResults } from "@/app/api/movies";
+import ListWrapper from "./ListWrapper";
 
 export default async function MoviesPage({ searchParams }) {
   const resolvedSearchParams = await searchParams;
@@ -20,10 +16,7 @@ export default async function MoviesPage({ searchParams }) {
 
   return (
     <main className="p-6">
-      <SearchBar />
-      {query ? <SearchList movies={movies} /> : <FullList movies={movies} />}
-      <PaginationControls currentPage={page} />
-      <UserList /> {/* UserList added to the page */}
+      <ListWrapper movies={movies} query={query} currentPage={page} />
     </main>
   );
 }
