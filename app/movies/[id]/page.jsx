@@ -1,34 +1,11 @@
-// Location: app/movies/[id]/page.jsx
 import Image from "next/image";
 import { fetchMovieDetails } from "@/app/api/movies";
-import AddToListClient from "./AddToListClient";
+import AddToListButton from "@/app/UI/components/AddToListButton";
+import Link from "next/link";
 
-export default async function MovieDetailsPage({ params: paramsPromise }) {
-  // Await the params object
-  const params = await paramsPromise;
-
-  // Extract the `id` from the route parameters
+export default async function MovieDetailsPage({ params }) {
   const { id } = params;
-
-  // Fetch movie details using the provided `id`
   const movie = await fetchMovieDetails(id);
-
-  // Helper function: Format release date
-  const formatReleaseDate = (dateString) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const date = new Date(dateString);
-    return date.toLocaleDateString(undefined, options);
-  };
-
-  // Helper function: Convert rating to stars
-  const formatRatingAsStars = (rating) => {
-    const fullStars = Math.floor(rating / 2);
-    const hasHalfStar = rating % 2 >= 0.5;
-    const stars = "★".repeat(fullStars);
-    const halfStar = hasHalfStar ? "½" : "";
-    const emptyStars = "☆".repeat(5 - fullStars - (hasHalfStar ? 1 : 0));
-    return `${stars}${halfStar}${emptyStars}`;
-  };
 
   return (
     <div className="flex flex-col gap-6 p-6">
@@ -42,15 +19,25 @@ export default async function MovieDetailsPage({ params: paramsPromise }) {
         className="rounded-lg shadow-md"
       />
       <p className="text-lg font-medium">
-        <strong>Release Date:</strong> {formatReleaseDate(movie.release_date)}
+        <strong>Release Date:</strong> {movie.release_date}
       </p>
       <p className="text-lg font-medium">
-        <strong>Average Rating:</strong>{" "}
-        {formatRatingAsStars(movie.vote_average)} ({movie.vote_count} votes)
+        <strong>Average Rating:</strong> {movie.vote_average} (
+        {movie.vote_count} votes)
       </p>
-
-      {/* Interactive Add to List Button */}
-      <AddToListClient movie={movie} />
+      <AddToListButton movie={movie} onAdd={() => console.log(movie)} />
+      <div className="flex gap-4 mt-4">
+        <Link href="/movies">
+          <button className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800">
+            Go Back
+          </button>
+        </Link>
+        <Link href="/">
+          <button className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800">
+            Go to Home
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

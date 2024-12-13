@@ -1,16 +1,23 @@
 "use client";
 
-export default function AddToListButton({ movie, onAdd }) {
+export default function AddToListButton({ movie, onAdd, disabled }) {
   const handleClick = () => {
-    onAdd(); // Call the onAdd function passed as a prop
+    if (!disabled) {
+      onAdd();
+    }
   };
 
   return (
     <button
-      className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800 disabled:bg-gray-400 disabled:cursor-not-allowed"
       onClick={handleClick}
+      disabled={disabled}
+      className={`px-4 py-2 text-white rounded ${
+        disabled
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-blue-600 hover:bg-blue-800"
+      }`}
     >
-      Add to List
+      {disabled ? "Added" : "Add to List"}
     </button>
   );
 }
