@@ -1,13 +1,18 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 export default function UserListSubmit({ userList }) {
-  const router = useRouter();
-
   const handleFinalize = () => {
-    const data = encodeURIComponent(JSON.stringify(userList));
-    router.push(`/movies/userlist?data=${data}`);
+    if (userList.length === 0) {
+      alert("No movies in your list to finalize!");
+      return;
+    }
+
+    // Generate a numbered list for the alert
+    const listText = userList
+      .map((movie, index) => `${index + 1}. ${movie.title}`)
+      .join("\n");
+
+    alert(`Your finalized list:\n\n${listText}`);
   };
 
   return (
