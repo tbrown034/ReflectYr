@@ -65,14 +65,12 @@ export default function ListWrapper({ movies, query, currentPage }) {
             movies={movies}
             userList={userList}
             addToUserList={addToUserList}
-            removeMovie={removeMovie}
           />
         ) : (
           <FullList
             movies={movies}
             userList={userList}
             addToUserList={addToUserList}
-            removeMovie={removeMovie}
           />
         )}
         <PaginationControls currentPage={currentPage} query={query} />
@@ -85,6 +83,7 @@ export default function ListWrapper({ movies, query, currentPage }) {
           removeMovie={removeMovie}
           moveUp={moveUp}
           moveDown={moveDown}
+          setUserList={setUserList}
         />
       </div>
     </div>

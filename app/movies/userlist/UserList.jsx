@@ -1,9 +1,15 @@
 "use client";
 
-import UserListControls from "./UserlistControls";
+import UserListControls from "./UserListControls";
 import UserListSubmit from "./UserListSubmit";
 
-export default function UserList({ userList, removeMovie, moveUp, moveDown }) {
+export default function UserList({
+  userList,
+  removeMovie,
+  moveUp,
+  moveDown,
+  setUserList,
+}) {
   const placeholderMovies = [
     "Movie 1",
     "Movie 2",
@@ -22,6 +28,11 @@ export default function UserList({ userList, removeMovie, moveUp, moveDown }) {
   return (
     <section className="p-2">
       <h2 className="mb-4 text-2xl font-bold">Your Top 10</h2>
+      {userList.length > 0 && (
+        <p className="mb-4 text-sm text-gray-600">
+          {`${userList.length}/10 movies added`}
+        </p>
+      )}
       <ol className="list-decimal list-inside">
         {moviesToDisplay.map((movie, index) => (
           <li
@@ -46,7 +57,7 @@ export default function UserList({ userList, removeMovie, moveUp, moveDown }) {
           </li>
         ))}
       </ol>
-      <UserListSubmit userList={userList} />
+      <UserListSubmit userList={userList} setUserList={setUserList} />
     </section>
   );
 }

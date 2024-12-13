@@ -1,16 +1,16 @@
-// Location: app/movies/[id]/page.jsx
 import Image from "next/image";
 import { fetchMovieDetails } from "@/app/api/movies";
+import Link from "next/link";
 import AddToListClient from "./AddToListClient";
 
 export default async function MovieDetailsPage({ params: paramsPromise }) {
   // Await the params object
   const params = await paramsPromise;
 
-  // Extract the `id` from the route parameters
+  // Extract the id from the route parameters
   const { id } = params;
 
-  // Fetch movie details using the provided `id`
+  // Fetch movie details using the provided id
   const movie = await fetchMovieDetails(id);
 
   // Helper function: Format release date
@@ -49,8 +49,21 @@ export default async function MovieDetailsPage({ params: paramsPromise }) {
         {formatRatingAsStars(movie.vote_average)} ({movie.vote_count} votes)
       </p>
 
-      {/* Interactive Add to List Button */}
+      {/* Use AddToListClient for interactivity */}
       <AddToListClient movie={movie} />
+
+      <div className="flex gap-4 mt-4">
+        <Link href="/movies">
+          <button className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800">
+            Go Back
+          </button>
+        </Link>
+        <Link href="/">
+          <button className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800">
+            Go to Home
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }
