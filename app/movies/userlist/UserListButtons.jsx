@@ -1,16 +1,24 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function UserListButtons({ userList, setUserList }) {
+  const router = useRouter();
+
   const handleFinalize = () => {
     if (userList.length === 0) {
       alert("No movies in your list to finalize!");
       return;
     }
 
-    const listText = userList
-      .map((movie, index) => `${index + 1}. ${movie.title}`)
-      .join("\n");
-    alert(`Your finalized list:\n\n${listText}`);
+    // Generate a unique identifier (hash)
+    const uniqueId = Math.random().toString(36).substring(2, 10); // Example: "abc123xyz"
+
+    // Save the list to localStorage under the unique ID
+    localStorage.setItem(`userList-${uniqueId}`, JSON.stringify(userList));
+
+    // Navigate to the finalized list route
+    router.push(`/movies/finalized/${uniqueId}`);
   };
 
   const handleClear = () => {
