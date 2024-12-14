@@ -1,9 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Modal from "@/app/UI/components/Modal";
 
 export default function UserListButtons({ userList, setUserList }) {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [finalizeListId, setFinalizeListId] = useState(null);
 
   const handleFinalize = () => {
     if (userList.length === 0) {
@@ -11,14 +15,21 @@ export default function UserListButtons({ userList, setUserList }) {
       return;
     }
 
-    // Generate a unique identifier (hash)
-    const uniqueId = Math.random().toString(36).substring(2, 10); // Example: "abc123xyz"
+    // Open the modal for confirmation
+    setIsModalOpen(true);
+  };
 
-    // Save the list to localStorage under the unique ID
-    localStorage.setItem(`userList-${uniqueId}`, JSON.stringify(userList));
+  const confirmFinalize = () => {
+    // Generate a unique identifier for the list
+    const listId = Math.random().toString(36).substring(2, 10); // Example: "abc123xyz"
+    setFinalizeListId(listId);
 
-    // Navigate to the finalized list route
-    router.push(`/movies/finalized/${uniqueId}`);
+    // Save the list to localStorage using the unique ID
+    localStorage.setItem(`userList-${listId}`, JSON.stringify(userList));
+
+    // Close the modal and navigate to the finalized list route
+    setIsModalOpen(false);
+    router.push(`/movies/userListId/${listId}`);
   };
 
   const handleClear = () => {
@@ -41,6 +52,25 @@ export default function UserListButtons({ userList, setUserList }) {
       >
         Clear
       </button>
+
+      {/* Modal */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmFinalize}
+      >
+        <h2 className="mb-2 text-lg font-bold">Confirm Finalization</h2>
+        <p className="mb-4">
+          {userList.length < 10
+            ? "Your list has fewer than 10 movies. Are you sure you want to finalize it?"
+            : "Are you ready to finalize your list?"}
+        </p>
+        <ol className="text-sm text-gray-700 list-decimal list-inside">
+          {userList.map((movie, index) => (
+            <li key={index}>{movie.title}</li>
+          ))}
+        </ol>
+      </Modal>
     </div>
   );
 }
