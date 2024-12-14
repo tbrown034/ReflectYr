@@ -1,7 +1,8 @@
 "use client";
 
 import UserListControls from "./UserListControls";
-import UserListSubmit from "./UserListSubmit";
+import UserListButtons from "./UserListButtons";
+import Link from "next/link";
 
 export default function UserList({
   userList,
@@ -37,11 +38,20 @@ export default function UserList({
         {moviesToDisplay.map((movie, index) => (
           <li
             key={index}
-            className="flex items-center justify-between gap-4 py-2 border-b group"
+            className="flex items-center justify-between gap-4 py-2 border-b group hover:bg-gray-100"
           >
-            <span className="flex-1">
-              {userList.length > 0 ? movie.title || movie : movie}
-            </span>
+            {userList.length > 0 ? (
+              // Movie Title as a clickable Link
+              <Link
+                href={`/movies/${movie.id}`}
+                className="flex-1 text-blue-600 cursor-pointer hover:underline"
+              >
+                {movie.title}
+              </Link>
+            ) : (
+              // Placeholder movie (non-clickable)
+              <span className="flex-1">{movie}</span>
+            )}
 
             {userList.length > 0 && (
               <div className="transition opacity-75 group-hover:opacity-100">
@@ -57,7 +67,7 @@ export default function UserList({
           </li>
         ))}
       </ol>
-      <UserListSubmit userList={userList} setUserList={setUserList} />
+      <UserListButtons userList={userList} setUserList={setUserList} />
     </section>
   );
 }

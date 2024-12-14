@@ -1,6 +1,6 @@
 "use client";
 
-export default function UserListSubmit({ userList, setUserList }) {
+export default function UserListButtons({ userList, setUserList }) {
   const handleFinalize = () => {
     if (userList.length === 0) {
       alert("No movies in your list to finalize!");
@@ -19,17 +19,17 @@ export default function UserListSubmit({ userList, setUserList }) {
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex items-center justify-between mt-4">
       <button
         onClick={handleFinalize}
         disabled={userList.length === 0}
-        className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800 disabled:bg-gray-400"
+        className="px-4 py-2 transition border-2 border-black rounded hover:bg-black hover:text-white disabled:bg-gray-300 disabled:cursor-not-allowed"
       >
         Finalize
       </button>
       <button
         onClick={handleClear}
-        className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-800"
+        className="px-4 py-2 transition border-2 border-black rounded hover:bg-red-600 hover:text-white"
       >
         Clear
       </button>
