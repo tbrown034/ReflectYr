@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import getGuestUserId from "@/utils/getGuestUserId";
 
 export default function UserListButtons({ userList, setUserList }) {
   const router = useRouter();
@@ -12,13 +13,19 @@ export default function UserListButtons({ userList, setUserList }) {
     }
 
     // Generate a unique ID for the finalized list
-    const listId = Math.random().toString(36).substring(2, 10); // e.g., "rt1dyw8u"
+    const listId = Math.random().toString(36).substring(2, 10);
+
+    // Get or generate a guest user ID
+    const userId = getGuestUserId();
 
     // Save the list to localStorage
-    localStorage.setItem(`userList-${listId}`, JSON.stringify(userList));
+    localStorage.setItem(
+      `userList-${userId}-${listId}`,
+      JSON.stringify(userList)
+    );
 
-    // Navigate to the new dynamic route
-    router.push(`/movies/${listId}`);
+    // Navigate to the finalized list route
+    router.push(`/user/${userId}/movies/${listId}`);
   };
 
   const handleClear = () => {
@@ -31,13 +38,13 @@ export default function UserListButtons({ userList, setUserList }) {
       <button
         onClick={handleFinalize}
         disabled={userList.length === 0}
-        className="px-4 py-2 transition border-2 border-black rounded hover:bg-black hover:text-white disabled:bg-gray-300 disabled:cursor-not-allowed"
+        className="px-4 py-2 border-2 border-black rounded hover:bg-black hover:text-white disabled:bg-gray-300 disabled:cursor-not-allowed"
       >
         Finalize
       </button>
       <button
         onClick={handleClear}
-        className="px-4 py-2 transition border-2 border-black rounded hover:bg-red-600 hover:text-white"
+        className="px-4 py-2 border-2 border-black rounded hover:bg-red-600 hover:text-white"
       >
         Clear
       </button>
