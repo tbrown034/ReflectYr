@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import SearchBar from "@/app/UI/components/SearchBar";
 import PaginationControls from "@/app/UI/components/PaginationControls";
-import UserList from "./UserList/UserList";
+import UserList from "./UserListFolder/UserList";
 import FullList from "./MoviesList/FullList";
 import SearchList from "./MoviesList/SearchList";
 

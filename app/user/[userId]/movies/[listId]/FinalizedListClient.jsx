@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import UserListControls from "@/app/movies/UserList/UserListControls";
+import UserListControls from "@/app/movies/UserListFolder/UserListControls";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRouter } from "next/navigation";
