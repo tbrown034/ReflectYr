@@ -80,13 +80,9 @@ export default function FinalizedListClient({ userId, listId }) {
   return (
     <div className="flex flex-col gap-6 p-6">
       {/* Header */}
-      <h1
-        className={`text-3xl font-bold mb-4 ${
-          isEditing ? "text-red-600" : "text-gray-900"
-        }`}
-      >
+      <h1 className={` ${isEditing ? "text-red-600" : "text-gray-900"}`}>
         {isEditing
-          ? "Edit Mode: Adjust Your Movie List"
+          ? "Edit Mode"
           : `${userName ? `${userName}'s` : "My"} Top Movies of 2024`}
       </h1>
 
@@ -128,14 +124,14 @@ export default function FinalizedListClient({ userId, listId }) {
         {!isEditing ? (
           <button
             onClick={toggleEditMode}
-            className="px-4 py-2 text-white bg-yellow-500 rounded hover:bg-yellow-700"
+            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
           >
             Edit List
           </button>
         ) : (
           <button
             onClick={toggleEditMode}
-            className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-700"
+            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
           >
             Finalize List
           </button>
@@ -147,13 +143,13 @@ export default function FinalizedListClient({ userId, listId }) {
         <div className="flex gap-4">
           <button
             onClick={handleDownloadImage}
-            className="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-800"
+            className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800"
           >
             Download as Image
           </button>
           <button
             onClick={handleDownloadPDF}
-            className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-800"
+            className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800"
           >
             Download as PDF
           </button>

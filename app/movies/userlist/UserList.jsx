@@ -1,5 +1,3 @@
-"use client";
-
 import UserListControls from "./UserListControls";
 import UserListButtons from "./UserListButtons";
 import Link from "next/link";
