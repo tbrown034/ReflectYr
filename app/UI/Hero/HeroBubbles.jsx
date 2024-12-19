@@ -29,7 +29,7 @@ const HeroBubbles = () => {
   ];
 
   return (
-    <div className="flex flex-col w-full gap-6 md:flex-row md:justify-start">
+    <div className="flex flex-col w-full gap-6 sm:flex-row sm:justify-start">
       {bubbles.map((bubble, index) => (
         <Link
           key={index}
