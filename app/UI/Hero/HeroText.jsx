@@ -2,8 +2,10 @@ const HeroText = () => {
   return (
     <div className="flex flex-col items-center gap-10 text-center md:items-start md:text-left">
       {/* Main Heading */}
-      <h1 className="text-5xl font-extrabold leading-tight text-white md:text-6xl">
-        ReflectYr: <br className="hidden md:block" /> Your Year in Review
+      <h1 className="text-5xl font-extrabold leading-tight md:text-6xl">
+        <span className="text-amber-400">ReflectYr:</span>{" "}
+        <br className="hidden md:block" />
+        <span className="text-white">Your Year in Review</span>
       </h1>
 
       {/* Subheading */}
