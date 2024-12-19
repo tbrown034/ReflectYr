@@ -78,35 +78,39 @@ export default function FinalizedListClient({ userId, listId }) {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      {/* Header */}
-      <h1 className={` ${isEditing ? "text-red-600" : "text-gray-900"}`}>
-        {isEditing
-          ? "Edit Mode"
-          : `${userName ? `${userName}'s` : "My"} Top Movies of 2024`}
-      </h1>
-
-      {/* Add More Movies */}
+    <div className="flex flex-col items-center min-h-screen gap-8 p-6 text-gray-100 bg-gray-900">
+      {/* Add More Movies Button */}
       {movies.length < 10 && !isEditing && (
         <button
           onClick={handleAddMore}
-          className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700 w-fit"
+          className="self-start px-6 py-3 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
         >
           Add More Movies
         </button>
       )}
 
-      {/* Movie List */}
+      {/* Shareable Content */}
       <div
         id="shareable-content"
-        className={`p-4 border rounded shadow-lg ${
-          isEditing ? "border-red-500" : "border-gray-300"
+        className={`p-6 bg-gray-800 rounded-lg shadow-lg ${
+          isEditing ? "border-4 border-red-500" : "border-4 border-gray-700"
         }`}
       >
-        <ol className="list-decimal list-inside">
+        <h2 className="text-4xl font-bold text-center text-amber-400">
+          {userName ? `${userName}'s` : "My"} Top Movies of 2024
+        </h2>
+        <ol className="mt-6 space-y-4">
           {movies.map((movie, index) => (
-            <li key={index} className="flex items-center justify-between py-2">
-              <span>{movie.title}</span>
+            <li
+              key={index}
+              className="flex items-start gap-4 px-4 py-2 text-lg bg-gray-700 rounded-lg hover:bg-gray-600"
+            >
+              <span className="text-2xl font-bold text-amber-400">
+                {index + 1}.
+              </span>
+              <span className="flex-1 font-medium text-gray-100">
+                {movie.title}
+              </span>
               {isEditing && (
                 <UserListControls
                   onMoveUp={() => moveUp(index)}
@@ -124,14 +128,14 @@ export default function FinalizedListClient({ userId, listId }) {
         {!isEditing ? (
           <button
             onClick={toggleEditMode}
-            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+            className="px-6 py-3 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
           >
             Edit List
           </button>
         ) : (
           <button
             onClick={toggleEditMode}
-            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700"
+            className="px-6 py-3 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
           >
             Finalize List
           </button>
@@ -140,16 +144,16 @@ export default function FinalizedListClient({ userId, listId }) {
 
       {/* Share Options */}
       {!isEditing && (
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <button
             onClick={handleDownloadImage}
-            className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800"
+            className="px-6 py-3 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-800"
           >
             Download as Image
           </button>
           <button
             onClick={handleDownloadPDF}
-            className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800"
+            className="px-6 py-3 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-800"
           >
             Download as PDF
           </button>
