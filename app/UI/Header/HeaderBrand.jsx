@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { ClockIcon } from "@/components/heroicons";
+import { ClockIcon } from "@heroicons/react/24/outline";
 
 const HeaderBrand = () => {
   return (

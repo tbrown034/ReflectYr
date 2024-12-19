@@ -5,7 +5,7 @@ import HeroBubbles from "../UI/Hero/HeroBubbles";
 
 const GetStarted = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-8 p-6 text-gray-100 bg-gray-900">
+    <div className="flex flex-col items-center justify-center gap-8 p-6 text-gray-100 bg-gray-900">
       {/* Heading */}
       <h1 className="text-4xl font-extrabold text-amber-400">Get Started</h1>
       <p className="max-w-lg text-center text-gray-300">
@@ -14,7 +14,7 @@ const GetStarted = () => {
       </p>
 
       {/* Call-to-Actions */}
-      <div className="flex flex-col w-full max-w-md gap-6 sm:flex-row">
+      <div className="flex flex-col w-full max-w-md gap-6 ">
         {/* Sign In Option */}
         <div className="flex flex-col items-center justify-center w-full gap-4 p-6 bg-gray-800 border-2 rounded-lg shadow-lg border-amber-400">
           <SignInAndOut />
