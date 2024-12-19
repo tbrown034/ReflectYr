@@ -1,28 +1,21 @@
 import HeaderNavBar from "./HeaderNavBar";
 import HeaderBrand from "./HeaderBrand";
-import HeaderLogInProfileToggle from "./HeaderLogInProfileToggle";
-import HeaderDarkToggle from "./HeaderDarkToggle";
 import HeaderMobileMenu from "./HeaderMobileMenu"; // Client Component
+import SignInAndOut from "../components/SignInAndOut";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
-      {/* Left Section: Brand */}
+    <header className="flex items-center justify-between p-4 border-b border-gray-200 ">
       <HeaderBrand />
-
-      {/* Center Section: Full Navbar (Hidden on Mobile) */}
-      <nav className="hidden gap-6 md:flex">
+      <nav className="hidden md:flex md:gap-6">
         <HeaderNavBar />
       </nav>
-
-      {/* Right Section: Log In/Profile and Dark Toggle (Hidden on Mobile) */}
-      <div className="items-center hidden gap-4 md:flex">
-        <HeaderLogInProfileToggle />
-        <HeaderDarkToggle />
+      <div className="flex items-center gap-4">
+        <div className="hidden md:flex">
+          <SignInAndOut />
+        </div>
+        <HeaderMobileMenu className="md:hidden" />
       </div>
-
-      {/* Mobile Menu (Client Component) */}
-      <HeaderMobileMenu />
     </header>
   );
 };

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "module": "esnext",
-    "baseUrl": ".", // For absolute imports
+    "baseUrl": ".", // Enable absolute imports
     "paths": {
       "@/*": [
         "./*"
@@ -10,13 +10,13 @@
     },
     "allowJs": true, // Allow JavaScript files
     "checkJs": false, // Disable type-checking for JavaScript files
-    "skipLibCheck": true,
-    "strict": false, // Disable strict mode (optional for JavaScript)
+    "skipLibCheck": true, // Skip type-checking for libraries
+    "strict": false, // Disable strict type-checking
     "noEmit": true, // Prevent emitting compiled files
-    "incremental": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
+    "incremental": true, // Use incremental compilation
+    "resolveJsonModule": true, // Allow importing JSON files
+    "isolatedModules": true, // Compatibility with Next.js
+    "jsx": "preserve", // Preserve JSX (handled by Next.js)
     "lib": [
       "dom",
       "dom.iterable",
@@ -31,14 +31,29 @@
     ]
   },
   "include": [
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.ts",
-    "**/*.tsx",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "components/**/*.ts",
+    "components/**/*.tsx",
     "next-env.d.ts",
+    "pages/**/*.ts",
+    "pages/**/*.tsx" // Required for Next.js
+    ,
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
-  ]
+    "node_modules", // Exclude dependencies
+    ".next", // Exclude build files
+    "out", // Exclude output directory
+    "**/*.js", // Exclude plain JavaScript files
+    "**/*.jsx" // Exclude plain JSX files
+  ],
+  "watchOptions": {
+    "excludeFiles": [
+      "**/.git/**/*",
+      "**/node_modules/**/*"
+    ], // Ignore deleted files from tracked directories
+    "watchFile": "useFsEventsOnParentDirectory", // Use efficient file watching
+    "watchDirectory": "useFsEvents" // Use OS-native events for directory changes
+  }
 }

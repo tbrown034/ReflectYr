@@ -7,9 +7,5 @@ export default async function SignInAndOut() {
 
   const button = session ? <SignOut /> : <SignIn />;
 
-  return (
-    <div className="flex">
-      <div className="p-2 border-2 border-black rounded-xl">{button}</div>
-    </div>
-  );
+  return <div>{button}</div>;
 }
