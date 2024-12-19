@@ -1,7 +1,3 @@
-// Location: app/UI/components/SearchBar.jsx
-// Type: Client Component
-// Purpose: Allows users to search for movies by dynamically updating the URL with the search query.
-
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -31,7 +27,7 @@ export default function SearchBar() {
       placeholder="Search movies..."
       defaultValue={searchParams.get("query") || ""}
       onChange={(e) => handleSearch(e.target.value)}
-      className="px-4 py-2 border rounded"
+      className="px-4 py-2 text-gray-100 placeholder-gray-400 bg-gray-700 rounded-lg focus:ring-2 focus:ring-amber-400 focus:outline-none"
     />
   );
 }

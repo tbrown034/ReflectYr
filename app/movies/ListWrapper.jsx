@@ -10,29 +10,25 @@ import SearchList from "./MoviesList/SearchList";
 export default function ListWrapper({ movies, query, currentPage }) {
   const [userList, setUserList] = useState([]);
 
-  // Load user list from localStorage on initial render
   useEffect(() => {
     const storedList = JSON.parse(localStorage.getItem("userList") || "[]");
     setUserList(storedList);
   }, []);
 
-  // Add a movie to the user's list
   const addToUserList = (movie) => {
     const updatedList = [...userList, movie];
     setUserList(updatedList);
     localStorage.setItem("userList", JSON.stringify(updatedList));
   };
 
-  // Remove a movie from the user's list
   const removeMovie = (movieId) => {
     const updatedList = userList.filter((movie) => movie.id !== movieId);
     setUserList(updatedList);
     localStorage.setItem("userList", JSON.stringify(updatedList));
   };
 
-  // Move a movie up in the user's list
   const moveUp = (index) => {
-    if (index === 0) return; // Already at the top
+    if (index === 0) return;
     const updatedList = [...userList];
     [updatedList[index - 1], updatedList[index]] = [
       updatedList[index],
@@ -42,9 +38,8 @@ export default function ListWrapper({ movies, query, currentPage }) {
     localStorage.setItem("userList", JSON.stringify(updatedList));
   };
 
-  // Move a movie down in the user's list
   const moveDown = (index) => {
-    if (index === userList.length - 1) return; // Already at the bottom
+    if (index === userList.length - 1) return;
     const updatedList = [...userList];
     [updatedList[index + 1], updatedList[index]] = [
       updatedList[index],
@@ -55,10 +50,9 @@ export default function ListWrapper({ movies, query, currentPage }) {
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* Top Movies Section */}
-      <div className="flex flex-col gap-4 p-4 border-2 border-black rounded-xl">
-        <h1 className="text-2xl font-bold">Top Movies</h1>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4 p-6 bg-gray-800 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold text-amber-400">Top Movies</h1>
         <SearchBar query={query} />
         {query ? (
           <SearchList
@@ -75,9 +69,8 @@ export default function ListWrapper({ movies, query, currentPage }) {
         )}
         <PaginationControls currentPage={currentPage} query={query} />
       </div>
-
-      {/* User's Selected Movies Section */}
-      <div className="flex flex-col gap-4 p-4 border-2 border-black rounded-xl">
+      <div className="p-6 bg-gray-800 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold text-amber-400">Your List</h1>
         <UserList
           userList={userList}
           removeMovie={removeMovie}

@@ -25,46 +25,52 @@ export default function UserList({
   const moviesToDisplay = userList.length > 0 ? userList : placeholderMovies;
 
   return (
-    <section className="p-2">
-      <h2 className="mb-4 text-2xl font-bold">Your Top 10</h2>
+    <section className="p-4 rounded-lg shadow-lg">
       {userList.length > 0 && (
-        <p className="mb-4 text-sm text-gray-600">
+        <p className="mb-4 text-sm text-gray-400">
           {`${userList.length}/10 movies added`}
         </p>
       )}
-      <ol className="list-decimal list-inside">
+
+      {/* Numbered List */}
+      <ol className="space-y-2">
         {moviesToDisplay.map((movie, index) => (
           <li
             key={index}
-            className="flex items-center justify-between gap-4 py-2 border-b group hover:bg-gray-100"
+            className="flex items-center gap-4 px-4 py-2 transition rounded-lg hover:bg-gray-800"
           >
+            {/* Number */}
+            <span className="w-6 text-lg font-bold text-gray-400">
+              {index + 1}.
+            </span>
+
+            {/* Movie Title */}
             {userList.length > 0 ? (
-              // Movie Title as a clickable Link
               <Link
                 href={`/movies/${movie.id}`}
-                className="flex-1 text-blue-600 cursor-pointer hover:underline"
+                className="flex-1 text-lg font-semibold text-gray-100 hover:text-amber-400"
               >
                 {movie.title}
               </Link>
             ) : (
-              // Placeholder movie (non-clickable)
-              <span className="flex-1">{movie}</span>
+              <span className="flex-1 text-gray-400">{movie}</span>
             )}
 
+            {/* Controls for Up, Down, Remove */}
             {userList.length > 0 && (
-              <div className="transition opacity-75 group-hover:opacity-100">
-                <UserListControls
-                  onMoveUp={index > 0 ? () => moveUp(index) : null}
-                  onMoveDown={
-                    index < userList.length - 1 ? () => moveDown(index) : null
-                  }
-                  onRemove={() => removeMovie(movie.id)}
-                />
-              </div>
+              <UserListControls
+                onMoveUp={index > 0 ? () => moveUp(index) : null}
+                onMoveDown={
+                  index < userList.length - 1 ? () => moveDown(index) : null
+                }
+                onRemove={() => removeMovie(movie.id)}
+              />
             )}
           </li>
         ))}
       </ol>
+
+      {/* Clear and Submit Buttons */}
       <UserListButtons userList={userList} setUserList={setUserList} />
     </section>
   );

@@ -31,21 +31,22 @@ export default async function MovieDetailsPage({ params: paramsPromise }) {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <h1 className="text-4xl font-bold">{movie.title}</h1>
-      <p className="text-gray-700">{movie.overview}</p>
+    <div className="flex flex-col min-h-screen gap-6 p-6 text-gray-100 bg-gray-900">
+      <h1 className="text-4xl font-bold text-amber-400">{movie.title}</h1>
+      <p className="text-gray-300">{movie.overview}</p>
       <Image
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
-        width={300}
-        height={450}
-        className="rounded-lg shadow-md"
+        width={200}
+        height={250}
+        className="rounded-lg shadow-lg"
       />
       <p className="text-lg font-medium">
-        <strong>Release Date:</strong> {formatReleaseDate(movie.release_date)}
+        <strong className="text-amber-400">Release Date:</strong>{" "}
+        {formatReleaseDate(movie.release_date)}
       </p>
       <p className="text-lg font-medium">
-        <strong>Average Rating:</strong>{" "}
+        <strong className="text-amber-400">Average Rating:</strong>{" "}
         {formatRatingAsStars(movie.vote_average)} ({movie.vote_count} votes)
       </p>
 
@@ -54,12 +55,12 @@ export default async function MovieDetailsPage({ params: paramsPromise }) {
 
       <div className="flex gap-4 mt-4">
         <Link href="/movies">
-          <button className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800">
+          <button className="px-4 py-2 text-gray-900 rounded bg-amber-400 hover:bg-amber-500">
             Go Back
           </button>
         </Link>
         <Link href="/">
-          <button className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-800">
+          <button className="px-4 py-2 text-gray-900 bg-gray-300 rounded hover:bg-gray-400">
             Go to Home
           </button>
         </Link>
