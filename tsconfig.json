@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "esnext",
+    "baseUrl": ".", // For absolute imports
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "allowJs": true, // Allow JavaScript files
+    "checkJs": false, // Disable type-checking for JavaScript files
+    "skipLibCheck": true,
+    "strict": false, // Disable strict mode (optional for JavaScript)
+    "noEmit": true, // Prevent emitting compiled files
+    "incremental": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
