@@ -9,7 +9,7 @@ const HeroText = () => {
       </h1>
 
       {/* Subheading */}
-      <p className="max-w-2xl mx-auto text-lg leading-relaxed text-gray-300 md:text-xl md:mx-0">
+      <p className="mx-auto text-lg leading-relaxed text-gray-300  md:text-xl md:mx-0">
         Celebrate your year. Curate your favorite movies, TV shows, music, and
         books from the past 12 months. Build your list and share it with
         friends—or just reflect for yourself.

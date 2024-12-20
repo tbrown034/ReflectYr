@@ -19,13 +19,13 @@ const HeroBubbles = () => {
       icon: <TvIcon className="w-8 h-8 text-amber-400" />,
       route: "/tv",
     },
-    {
-      title: "Music",
-      description: "Reflect on the tracks and albums that defined your year.",
-      bgColor: "bg-gray-800",
-      icon: <MusicalNoteIcon className="w-8 h-8 text-amber-400" />,
-      route: "/music",
-    },
+    // {
+    //   title: "Music",
+    //   description: "Reflect on the tracks and albums that defined your year.",
+    //   bgColor: "bg-gray-800",
+    //   icon: <MusicalNoteIcon className="w-8 h-8 text-amber-400" />,
+    //   route: "/music",
+    // },
   ];
 
   return (
@@ -38,7 +38,7 @@ const HeroBubbles = () => {
         >
           <div className="flex items-center gap-3">
             {bubble.icon}
-            <h3 className="text-xl font-bold text-gray-100 border-b-2 border-transparent group-hover:text-amber-400 group-hover:border-amber-400">
+            <h3 className="text-xl font-bold text-gray-100 transition border-b-2 border-transparent group-hover:text-amber-400 group-hover:border-amber-400">
               {bubble.title}
             </h3>
           </div>

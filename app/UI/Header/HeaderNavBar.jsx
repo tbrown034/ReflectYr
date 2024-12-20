@@ -10,9 +10,9 @@ const HeaderNavBar = () => {
       <Link className=" hover:underline underline-offset-2" href="/tv">
         TV
       </Link>
-      <Link className=" hover:underline underline-offset-2" href="/music">
+      {/* <Link className=" hover:underline underline-offset-2" href="/music">
         Music
-      </Link>
+      </Link> */}
     </ul>
   );
 };
