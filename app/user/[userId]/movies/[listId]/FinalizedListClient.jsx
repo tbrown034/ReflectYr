@@ -99,18 +99,13 @@ export default function FinalizedListClient({ userId, listId }) {
         <h2 className="text-4xl font-bold text-center text-amber-400">
           {userName ? `${userName}'s` : "My"} Top Movies of 2024
         </h2>
-        <ol className="mt-6 space-y-4">
+        <ol className="mt-6 space-y-4 list-decimal">
           {movies.map((movie, index) => (
             <li
               key={index}
-              className="flex items-start gap-4 px-4 py-2 text-lg bg-gray-700 rounded-lg hover:bg-gray-600"
+              className="flex items-center justify-between px-4 py-2 bg-gray-700 rounded hover:bg-gray-600"
             >
-              <span className="text-2xl font-bold text-amber-400">
-                {index + 1}.
-              </span>
-              <span className="flex-1 font-medium text-gray-100">
-                {movie.title}
-              </span>
+              <span className="text-lg font-medium">{movie.title}</span>
               {isEditing && (
                 <UserListControls
                   onMoveUp={() => moveUp(index)}

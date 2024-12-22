@@ -1,5 +1,4 @@
 import React from "react";
-import SignInAndOut from "../UI/components/SignInAndOut";
 import Link from "next/link";
 import HeroBubbles from "../UI/Hero/HeroBubbles";
 
@@ -14,10 +13,19 @@ const GetStarted = () => {
       </p>
 
       {/* Call-to-Actions */}
-      <div className="flex flex-col w-full max-w-md gap-6 ">
+      <div className="flex flex-col w-full max-w-md gap-6">
         {/* Sign In Option */}
         <div className="flex flex-col items-center justify-center w-full gap-4 p-6 bg-gray-800 border-2 rounded-lg shadow-lg border-amber-400">
-          <SignInAndOut />
+          <h2 className="text-xl font-bold">Sign In</h2>
+          <p className="text-sm text-gray-400">
+            Sign in to save your lists and sync across devices.
+          </p>
+          <Link
+            href="/log-in"
+            className="px-6 py-3 text-lg font-semibold text-gray-900 transition border-2 border-transparent rounded-lg shadow-lg bg-amber-400 hover:scale-105"
+          >
+            Sign In
+          </Link>
         </div>
 
         {/* Guest Option */}
@@ -27,10 +35,17 @@ const GetStarted = () => {
             Start creating lists without registering. Your lists will only be
             stored on this device.
           </p>
-
-          <HeroBubbles />
+          <Link
+            href="/movies"
+            className="px-6 py-3 text-lg font-semibold text-gray-900 transition bg-gray-600 border-2 border-transparent rounded-lg shadow-lg hover:bg-gray-500 hover:scale-105"
+          >
+            Continue as Guest
+          </Link>
         </div>
       </div>
+
+      {/* Hero Bubbles */}
+      <HeroBubbles />
     </div>
   );
 };

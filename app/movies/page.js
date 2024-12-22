@@ -12,9 +12,6 @@ export default async function MoviesPage({ searchParams }) {
 
   return (
     <main className="min-h-screen p-6 text-gray-100 bg-gray-900">
-      <h1 className="mb-6 text-3xl font-bold text-amber-400">
-        Discover Movies
-      </h1>
       <ListWrapper movies={movies} query={query} currentPage={page} />
     </main>
   );
