@@ -1,52 +1,49 @@
 import AddToListButton from "@/app/UI/components/AddToListButton";
 import Link from "next/link";
 import Image from "next/image";
+
 export default function FullList({ movies, userList, addToUserList }) {
   return (
-    <ul className="p-4 divide-y divide-gray-700">
+    <ul className="p-4 space-y-4">
       {movies.map((movie) => {
         const isInUserList = userList.some((m) => m.id === movie.id);
 
         return (
           <li
             key={movie.id}
-            className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:gap-6 hover:bg-gray-800"
+            className="flex items-center justify-between p-4 transition-all duration-200 bg-gray-900 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-700"
           >
-            {/* Movie Poster and Title */}
-            <div className="flex items-center flex-1 gap-4">
-              {/* Poster */}
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                width={80}
-                height={120}
-                className="rounded-md shadow-md"
-              />
+            {/* Clickable Row */}
+            <Link
+              href={`/movies/${movie.id}`}
+              className="flex items-center flex-1 gap-4"
+            >
+              {/* Poster and Title */}
+              <div className="flex items-center gap-4">
+                {/* Poster */}
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.title}
+                  width={80}
+                  height={120}
+                  className="flex-shrink-0 rounded-md shadow-md"
+                />
 
-              {/* Title */}
-              <Link
-                href={`/movies/${movie.id}`}
-                className={`text-base font-semibold hover:text-amber-400 ${
-                  isInUserList
-                    ? "line-through decoration-amber-400 opacity-75"
-                    : "text-gray-100"
-                }`}
-              >
-                {movie.title}
-              </Link>
-            </div>
+                {/* Title */}
+                <p
+                  className={`text-sm sm:text-lg font-semibold ${
+                    isInUserList
+                      ? "line-through decoration-[3px] decoration-amber-500 opacity-100"
+                      : "text-gray-100 hover:text-amber-400"
+                  }`}
+                >
+                  {movie.title}
+                </p>
+              </div>
+            </Link>
 
-            {/* Buttons */}
-            <div className="flex self-start gap-3 sm:self-center">
-              {/* Details Button */}
-              <Link
-                href={`/movies/${movie.id}`}
-                className="px-4 py-2 text-sm font-medium text-white bg-gray-600 rounded hover:bg-gray-500 sm:text-base"
-              >
-                Details
-              </Link>
-
-              {/* Add to List Button */}
+            {/* Add/Added Button */}
+            <div>
               <AddToListButton
                 movie={movie}
                 onAdd={() => addToUserList(movie)}

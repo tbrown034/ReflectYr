@@ -50,8 +50,8 @@ export default function ListWrapper({ movies, query, currentPage }) {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-4 p-6 bg-gray-800 rounded-lg shadow-lg">
+    <>
+      <div className="flex flex-col gap-4 p-4 bg-gray-800 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold text-amber-400">Add Movies</h1>
         <SearchBar query={query} />
         {query ? (
@@ -69,7 +69,7 @@ export default function ListWrapper({ movies, query, currentPage }) {
         )}
         <PaginationControls currentPage={currentPage} query={query} />
       </div>
-      <div className="p-6 bg-gray-800 rounded-lg shadow-lg">
+      <div className="gap-4 p-4 bg-gray-800 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold text-amber-400">Your List</h1>
         <UserList
           userList={userList}
@@ -79,6 +79,6 @@ export default function ListWrapper({ movies, query, currentPage }) {
           setUserList={setUserList}
         />
       </div>
-    </div>
+    </>
   );
 }
