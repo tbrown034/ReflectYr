@@ -1,40 +1,52 @@
 import AddToListButton from "@/app/UI/components/AddToListButton";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function SearchList({ movies, userList, addToUserList }) {
   return (
-    <ul className="divide-y divide-gray-700">
+    <ul className="space-y-4 ">
       {movies.map((movie) => {
         const isInUserList = userList.some((m) => m.id === movie.id);
 
         return (
           <li
             key={movie.id}
-            className="flex items-center justify-between gap-4 px-4 py-4 transition hover:bg-gray-800"
+            className="flex items-center justify-between p-4 transition-all duration-200 bg-gray-900 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-700"
           >
-            {/* Movie Title with Conditional Strikethrough */}
+            {/* Clickable Row */}
             <Link
               href={`/movies/${movie.id}`}
-              className={`flex-1 text-lg font-semibold hover:text-amber-400 ${
-                isInUserList
-                  ? "line-through decoration-amber-400 opacity-75"
-                  : "text-gray-100"
-              }`}
+              className="flex items-center flex-1 gap-4"
             >
-              {movie.title}
+              {/* Poster and Title */}
+              <div className="flex items-center gap-4">
+                {/* Poster */}
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.title}
+                  width={80}
+                  height={120}
+                  className="flex-shrink-0 rounded-md shadow-md"
+                />
+
+                {/* Title */}
+                <p
+                  className={`text-sm sm:text-lg font-semibold ${
+                    isInUserList
+                      ? "line-through decoration-[3px] decoration-amber-500 opacity-100"
+                      : "text-gray-100 hover:text-amber-400"
+                  }`}
+                >
+                  {movie.title}
+                </p>
+              </div>
             </Link>
 
-            {/* Action Buttons */}
-            <div className="flex gap-2">
-              {/* Details Button */}
-              <Link
-                href={`/movies/${movie.id}`}
-                className="px-4 py-2 text-sm font-medium text-center text-white bg-gray-600 rounded w-28 hover:bg-gray-500"
-              >
-                Details
-              </Link>
-
-              {/* Add to List Button */}
+            {/* Add/Added Button */}
+            <div
+              className="flex-shrink-0"
+              onClick={(e) => e.stopPropagation()} // Prevents navigation when clicking the button
+            >
               <AddToListButton
                 movie={movie}
                 onAdd={() => addToUserList(movie)}

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function FullList({ movies, userList, addToUserList }) {
   return (
-    <ul className="p-4 space-y-4">
+    <ul className="space-y-4 ">
       {movies.map((movie) => {
         const isInUserList = userList.some((m) => m.id === movie.id);
 
@@ -31,7 +31,7 @@ export default function FullList({ movies, userList, addToUserList }) {
 
                 {/* Title */}
                 <p
-                  className={`text-sm sm:text-lg font-semibold ${
+                  className={`text-xs sm:text-lg font-semibold ${
                     isInUserList
                       ? "line-through decoration-[3px] decoration-amber-500 opacity-100"
                       : "text-gray-100 hover:text-amber-400"
