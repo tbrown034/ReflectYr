@@ -51,7 +51,7 @@ export default function ListWrapper({ movies, query, currentPage }) {
 
   return (
     <>
-      <div className="flex flex-col gap-4 p-4 bg-gray-800 rounded-lg shadow-lg">
+      <div className="flex flex-col gap-4 p-2 bg-gray-800 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold text-amber-400">Add Movies</h1>
         <SearchBar query={query} />
         {query ? (
