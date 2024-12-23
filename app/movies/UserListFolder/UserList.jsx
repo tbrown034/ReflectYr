@@ -26,7 +26,7 @@ export default function UserList({
   const moviesToDisplay = userList.length > 0 ? userList : placeholderMovies;
 
   return (
-    <section className="p-4 rounded-lg shadow-lg">
+    <section className="p-4 bg-gray-900 rounded-lg shadow-lg">
       <h1 className="text-lg font-bold text-amber-400">Your List</h1>
       {userList.length > 0 && (
         <p className="mb-4 text-sm text-gray-400">
@@ -35,17 +35,17 @@ export default function UserList({
       )}
 
       {/* Numbered List */}
-      <ol className="space-y-4">
+      <ol className="space-y-6">
         {moviesToDisplay.map((movie, index) => (
           <li
             key={index}
-            className="p-4 transition-all duration-200 bg-gray-900 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-700"
+            className="transition-all duration-200 bg-gray-800 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-700"
           >
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="p-4">
               {/* Left Section: Number, Poster, Title */}
               <Link
                 href={userList.length > 0 ? `/movies/${movie.id}` : "#"}
-                className="flex items-center flex-1 gap-4"
+                className="flex flex-col gap-4 sm:flex-row sm:items-center"
               >
                 {/* Number */}
                 {userList.length > 0 && (
@@ -81,7 +81,7 @@ export default function UserList({
 
               {/* Right Section: Controls */}
               {userList.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2 sm:mt-0 sm:ml-4 sm:flex-nowrap">
+                <div className="flex justify-center gap-4 mt-4">
                   <UserListControls
                     onMoveUp={index > 0 ? () => moveUp(index) : null}
                     onMoveDown={
@@ -97,7 +97,9 @@ export default function UserList({
       </ol>
 
       {/* Clear and Submit Buttons */}
-      <UserListButtons userList={userList} setUserList={setUserList} />
+      <div className="mt-6">
+        <UserListButtons userList={userList} setUserList={setUserList} />
+      </div>
     </section>
   );
 }
