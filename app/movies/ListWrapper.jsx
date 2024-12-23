@@ -50,7 +50,7 @@ export default function ListWrapper({ movies, query, currentPage }) {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-4 lg:flex-row">
+    <div className="flex flex-col gap-4 p-4 ">
       <h1 className="text-lg font-bold text-amber-400">Movies</h1>
       <div className="flex flex-col gap-4 p-4 bg-gray-800 rounded-lg shadow-lg">
         <h1 className="text-lg">Add Movies</h1>
@@ -70,7 +70,7 @@ export default function ListWrapper({ movies, query, currentPage }) {
         )}
         <PaginationControls currentPage={currentPage} query={query} />
       </div>
-      <div className="bg-gray-800 rounded-lg shadow-lg ">
+      <div className="flex flex-col gap-4 p-4 bg-gray-800 rounded-lg shadow-lg ">
         <UserList
           userList={userList}
           removeMovie={removeMovie}
