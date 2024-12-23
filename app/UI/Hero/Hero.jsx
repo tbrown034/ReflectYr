@@ -21,7 +21,7 @@ const Hero = () => {
 
         {/* Get Started Button */}
         <Link
-          href="/get-started"
+          href="/movies"
           className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-200 transition bg-gray-700 border-2 border-transparent rounded-lg shadow-lg hover:bg-gray-600 hover:scale-105"
         >
           <span>Get Started</span>

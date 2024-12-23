@@ -12,13 +12,13 @@ const HeroBubbles = () => {
       icon: <FilmIcon className="w-8 h-8 text-amber-400" />,
       route: "/movies",
     },
-    {
-      title: "TV Shows",
-      description: "Keep track of the shows that kept you hooked this year.",
-      bgColor: "bg-gray-700",
-      icon: <TvIcon className="w-8 h-8 text-amber-400" />,
-      route: "/tv",
-    },
+    // {
+    //   title: "TV Shows",
+    //   description: "Keep track of the shows that kept you hooked this year.",
+    //   bgColor: "bg-gray-700",
+    //   icon: <TvIcon className="w-8 h-8 text-amber-400" />,
+    //   route: "/tv",
+    // },
     // {
     //   title: "Music",
     //   description: "Reflect on the tracks and albums that defined your year.",

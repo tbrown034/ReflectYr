@@ -5,6 +5,7 @@ import UserListControls from "@/app/movies/UserListFolder/UserListControls";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function FinalizedListClient({ userId, listId }) {
   const [movies, setMovies] = useState([]);
@@ -14,18 +15,13 @@ export default function FinalizedListClient({ userId, listId }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Fetch the finalized list from localStorage
     const storedList = localStorage.getItem(`userList-${userId}-${listId}`);
     if (storedList) {
       setMovies(JSON.parse(storedList));
-    } else {
-      setMovies([]); // Fallback if no list is found
     }
   }, [userId, listId]);
 
-  const toggleEditMode = () => {
-    setIsEditing(!isEditing);
-  };
+  const toggleEditMode = () => setIsEditing(!isEditing);
 
   const moveUp = (index) => {
     if (index === 0) return;
@@ -48,13 +44,10 @@ export default function FinalizedListClient({ userId, listId }) {
   };
 
   const removeMovie = (index) => {
-    const updatedList = movies.filter((_, i) => i !== index);
-    setMovies(updatedList);
+    setMovies(movies.filter((_, i) => i !== index));
   };
 
-  const handleAddMore = () => {
-    router.push("/movies");
-  };
+  const handleAddMore = () => router.push("/movies");
 
   const handleDownloadImage = async () => {
     const element = document.getElementById("shareable-content");
@@ -78,82 +71,108 @@ export default function FinalizedListClient({ userId, listId }) {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen gap-8 p-6 text-gray-100 bg-gray-900">
-      {/* Add More Movies Button */}
-      {movies.length < 10 && !isEditing && (
-        <button
-          onClick={handleAddMore}
-          className="self-start px-6 py-3 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
-        >
-          Add More Movies
-        </button>
-      )}
-
+    <div className="flex flex-col items-center min-h-screen gap-6 p-6 text-gray-100 bg-gray-900">
       {/* Shareable Content */}
       <div
         id="shareable-content"
-        className={`p-6 bg-gray-800 rounded-lg shadow-lg ${
-          isEditing ? "border-4 border-red-500" : "border-4 border-gray-700"
-        }`}
+        className="w-full max-w-3xl p-4 bg-gray-800 border-4 border-gray-700 rounded-lg shadow-lg"
       >
-        <h2 className="text-4xl font-bold text-center text-amber-400">
-          {userName ? `${userName}'s` : "My"} Top Movies of 2024
+        <h2 className="text-3xl font-bold text-center text-amber-400 sm:text-4xl">
+          {userName ? `${userName}'s` : ""} {listTitle}
         </h2>
-        <ol className="mt-6 space-y-4 list-decimal">
+        <ul className="mt-6 space-y-4">
           {movies.map((movie, index) => (
             <li
               key={index}
-              className="flex items-center justify-between px-4 py-2 bg-gray-700 rounded hover:bg-gray-600"
+              className="transition-all duration-200 bg-gray-900 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-700"
             >
-              <span className="text-lg font-medium">{movie.title}</span>
+              <Link
+                href={`/movies/${movie.id}`}
+                className="flex items-center justify-between gap-4 p-4"
+              >
+                {/* Left Section: Number, Poster, Title */}
+                <div className="flex items-center gap-4">
+                  {/* Number */}
+                  <span className="text-lg font-bold text-gray-400">
+                    {index + 1}.
+                  </span>
+
+                  {/* Poster */}
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    className="w-[80px] h-[120px] rounded-md shadow-md"
+                  />
+
+                  {/* Title */}
+                  <p className="text-sm font-semibold text-gray-100 sm:text-lg">
+                    {movie.title}
+                  </p>
+                </div>
+              </Link>
+
+              {/* Edit Controls */}
               {isEditing && (
-                <UserListControls
-                  onMoveUp={() => moveUp(index)}
-                  onMoveDown={() => moveDown(index)}
-                  onRemove={() => removeMovie(index)}
-                />
+                <div className="flex items-center gap-2 p-4 sm:gap-4">
+                  <UserListControls
+                    onMoveUp={index > 0 ? () => moveUp(index) : null}
+                    onMoveDown={
+                      index < movies.length - 1 ? () => moveDown(index) : null
+                    }
+                    onRemove={() => removeMovie(index)}
+                  />
+                </div>
               )}
             </li>
           ))}
-        </ol>
-      </div>
+        </ul>
 
-      {/* Edit / Finalize Button */}
-      <div className="flex gap-4">
-        {!isEditing ? (
-          <button
-            onClick={toggleEditMode}
-            className="px-6 py-3 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
-          >
-            Edit List
-          </button>
-        ) : (
-          <button
-            onClick={toggleEditMode}
-            className="px-6 py-3 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
-          >
-            Finalize List
-          </button>
-        )}
-      </div>
+        {/* Buttons: Add More Movies and Edit List */}
+        <div className="flex justify-between mt-4 sm:justify-start sm:gap-4">
+          {/* Add More Movies */}
+          {movies.length < 10 && !isEditing && (
+            <button
+              onClick={handleAddMore}
+              className="p-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
+            >
+              Add More Movies
+            </button>
+          )}
 
-      {/* Share Options */}
-      {!isEditing && (
-        <div className="flex flex-col gap-4 sm:flex-row">
-          <button
-            onClick={handleDownloadImage}
-            className="px-6 py-3 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-800"
-          >
-            Download as Image
-          </button>
-          <button
-            onClick={handleDownloadPDF}
-            className="px-6 py-3 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-800"
-          >
-            Download as PDF
-          </button>
+          {/* Edit List */}
+          {!isEditing ? (
+            <button
+              onClick={toggleEditMode}
+              className="p-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
+            >
+              Edit List
+            </button>
+          ) : (
+            <button
+              onClick={toggleEditMode}
+              className="p-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
+            >
+              Finalize List
+            </button>
+          )}
         </div>
-      )}
+      </div>
+
+      {/* Download Buttons */}
+      <div className="flex items-center gap-4 sm:flex-row">
+        <button
+          onClick={handleDownloadImage}
+          className="p-2 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-800"
+        >
+          Download as Image
+        </button>
+        <button
+          onClick={handleDownloadPDF}
+          className="p-2 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-800"
+        >
+          Download as PDF
+        </button>
+      </div>
     </div>
   );
 }
