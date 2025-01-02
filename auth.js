@@ -14,5 +14,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         ? process.env.AUTH_GITHUB_SECRET_DEV
         : process.env.AUTH_GITHUB_SECRET,
     }),
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
   ],
+  secret: process.env.AUTH_SECRET, // Make sure your auth secret is set
 });

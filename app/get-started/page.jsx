@@ -12,10 +12,20 @@ export default async function GetStarted() {
         <h1 className="text-4xl font-extrabold text-amber-400 sm:text-5xl">
           Welcome to ReflectYr
         </h1>
-        <p className="text-lg leading-relaxed text-gray-300 sm:text-xl">
-          {session
-            ? `Hi, ${session.user.name}! Choose how you'd like to get started.`
-            : "Sign in to save your lists or continue as a guest to start exploring."}
+
+        <p className="text-2xl leading-relaxed text-gray-300 sm:text-xl">
+          {session ? (
+            <>
+              Hi,{" "}
+              <span className="font-bold text-amber-400">
+                {session.user.name}
+              </span>
+              !<br />
+              Choose how you'd like to get started.
+            </>
+          ) : (
+            "Sign in to save your lists or continue as a guest to start exploring."
+          )}
         </p>
       </div>
 
@@ -67,14 +77,14 @@ export default async function GetStarted() {
       <p className="mt-12 text-xs text-gray-500">
         By signing in, you agree to our{" "}
         <a
-          href="/terms"
+          href="/about"
           className="underline text-amber-400 hover:text-amber-500"
         >
           Terms of Service
         </a>{" "}
         and{" "}
         <a
-          href="/privacy"
+          href="/about"
           className="underline text-amber-400 hover:text-amber-500"
         >
           Privacy Policy
