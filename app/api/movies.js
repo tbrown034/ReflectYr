@@ -2,7 +2,6 @@
 // Type: Helper file
 // Purpose: Encapsulates TMDB API calls for reuse across components.
 
-// Shared configuration values
 const baseUrl = "https://api.themoviedb.org/3";
 const apiKey = process.env.TMDM_API_KEY;
 const movieYear = 2024; // Release year filter
