@@ -26,10 +26,12 @@ export default function UserList({
   const moviesToDisplay = userList.length > 0 ? userList : placeholderMovies;
 
   return (
-    <section className="p-4 bg-gray-900 rounded-lg shadow-lg">
-      <h1 className="text-lg font-bold text-amber-400">Your List</h1>
+    <section className="p-4 bg-gray-100 rounded-lg shadow-lg dark:bg-gray-900">
+      <h1 className="text-lg font-bold text-amber-500 dark:text-amber-400">
+        Your List
+      </h1>
       {userList.length > 0 && (
-        <p className="mb-4 text-sm text-gray-400">
+        <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
           {`${userList.length}/10 movies added`}
         </p>
       )}
@@ -39,7 +41,7 @@ export default function UserList({
         {moviesToDisplay.map((movie, index) => (
           <li
             key={index}
-            className="transition-all duration-200 bg-gray-800 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-700"
+            className="transition-all duration-200 bg-gray-200 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
             <div className="p-4">
               {/* Left Section: Number, Poster, Title */}
@@ -49,7 +51,7 @@ export default function UserList({
               >
                 {/* Number */}
                 {userList.length > 0 && (
-                  <span className="text-lg font-bold text-gray-400">
+                  <span className="text-lg font-bold text-gray-600 dark:text-gray-400">
                     {index + 1}.
                   </span>
                 )}
@@ -64,16 +66,16 @@ export default function UserList({
                     className="flex-shrink-0 rounded-md shadow-md"
                   />
                 ) : (
-                  <div className="w-[80px] h-[120px] bg-gray-700 rounded-md" />
+                  <div className="w-[80px] h-[120px] bg-gray-300 rounded-md dark:bg-gray-700" />
                 )}
 
                 {/* Title */}
                 {userList.length > 0 ? (
-                  <p className="text-sm font-semibold text-gray-100 sm:text-lg hover:text-amber-400">
+                  <p className="text-sm font-semibold text-gray-900 sm:text-lg hover:text-amber-500 dark:text-gray-200 dark:hover:text-amber-400">
                     {movie.title}
                   </p>
                 ) : (
-                  <span className="text-sm text-gray-400 sm:text-lg">
+                  <span className="text-sm text-gray-600 sm:text-lg dark:text-gray-400">
                     {movie}
                   </span>
                 )}

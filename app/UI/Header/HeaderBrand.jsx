@@ -6,7 +6,7 @@ const HeaderBrand = () => {
   return (
     <Link
       href="/"
-      className="flex items-center gap-3 px-4 py-2 text-gray-900 transition rounded-md dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-400"
+      className="flex items-center gap-3 px-4 py-2 text-gray-900 transition rounded-xl dark:text-gray-100"
     >
       {/* Brand Name */}
       <h1 className="text-xl font-bold tracking-wide">

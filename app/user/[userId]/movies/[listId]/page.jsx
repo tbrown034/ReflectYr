@@ -8,9 +8,7 @@ export default async function UserMovieListPage({ params: paramsPromise }) {
   const { userId, listId } = params;
 
   return (
-    <div className="p-4">
-      <h1 className="text-lg font-bold text-amber-400">Finalize Your List</h1>
-      {/* Pass the userId and listId to the Client Component */}
+    <div>
       <FinalizedListClient userId={userId} listId={listId} />
     </div>
   );

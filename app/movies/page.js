@@ -11,7 +11,7 @@ export default async function MoviesPage({ searchParams }) {
     : await fetchDiscoverMovies(page);
 
   return (
-    <main className="p-2 ">
+    <main className="p-2">
       <ListWrapper movies={movies} query={query} currentPage={page} />
     </main>
   );

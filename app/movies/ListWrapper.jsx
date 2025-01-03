@@ -9,7 +9,7 @@ import SearchList from "./MoviesList/SearchList";
 
 export default function ListWrapper({ movies, query, currentPage }) {
   const [userList, setUserList] = useState([]);
-  const [drawerOpen, setDrawerOpen] = useState(false); // For mobile drawer
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     const storedList = JSON.parse(localStorage.getItem("userList") || "[]");
@@ -23,40 +23,19 @@ export default function ListWrapper({ movies, query, currentPage }) {
   };
 
   const removeMovie = (movieId) => {
-    const updatedList = userList.filter((movie) => movie.id !== movieId);
-    setUserList(updatedList);
-    localStorage.setItem("userList", JSON.stringify(updatedList));
-  };
-
-  const moveUp = (index) => {
-    if (index === 0) return;
-    const updatedList = [...userList];
-    [updatedList[index - 1], updatedList[index]] = [
-      updatedList[index],
-      updatedList[index - 1],
-    ];
-    setUserList(updatedList);
-    localStorage.setItem("userList", JSON.stringify(updatedList));
-  };
-
-  const moveDown = (index) => {
-    if (index === userList.length - 1) return;
-    const updatedList = [...userList];
-    [updatedList[index + 1], updatedList[index]] = [
-      updatedList[index],
-      updatedList[index + 1],
-    ];
+    const updatedList = userList.filter((m) => m.id !== movieId);
     setUserList(updatedList);
     localStorage.setItem("userList", JSON.stringify(updatedList));
   };
 
   return (
-    <div className="flex flex-col-reverse gap-4 p-4 md:flex-row">
-      {/* Search and Movie List */}
+    <div className="flex flex-col-reverse gap-6 md:flex-row">
+      {/* Search Results */}
       <div className="flex-1">
-        <h1 className="text-lg font-bold text-amber-400">Movies</h1>
-        <div className="flex flex-col gap-4 p-4 bg-gray-800 rounded-lg shadow-lg">
-          <h1 className="text-lg">Add Movies</h1>
+        <div className="flex flex-col gap-4 p-4 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
+            Add Movies
+          </h2>
           <SearchBar query={query} />
           {query ? (
             <SearchList
@@ -76,37 +55,12 @@ export default function ListWrapper({ movies, query, currentPage }) {
       </div>
 
       {/* User List */}
-      <div className="hidden w-full max-w-sm p-4 bg-gray-800 rounded-lg shadow-lg md:block md:flex-shrink-0">
+      <div className="hidden w-full max-w-sm p-4 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800 md:block">
         <UserList
           userList={userList}
           removeMovie={removeMovie}
-          moveUp={moveUp}
-          moveDown={moveDown}
           setUserList={setUserList}
         />
-      </div>
-
-      {/* Mobile Drawer */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gray-800 md:hidden">
-        <button
-          className="w-full px-4 py-8 text-sm font-bold text-gray-100 rounded-t-lg bg-amber-500 hover:bg-amber-600"
-          onClick={() => setDrawerOpen(!drawerOpen)}
-        >
-          {drawerOpen ? "Hide Your List" : "View Your List"}
-        </button>
-        {drawerOpen && (
-          <div className="p-4 overflow-y-auto bg-gray-800 max-h-96">
-            {" "}
-            {/* Increased max height */}
-            <UserList
-              userList={userList}
-              removeMovie={removeMovie}
-              moveUp={moveUp}
-              moveDown={moveDown}
-              setUserList={setUserList}
-            />
-          </div>
-        )}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import {
   UserCircleIcon,
   ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
+import SignIn from "@/app/UI/components/SignIn"; // Reuse your existing SignIn component
 
 export default async function GetStarted() {
   const session = await auth();
@@ -17,6 +18,7 @@ export default async function GetStarted() {
           bgColor: "bg-gray-600",
           icon: <UserCircleIcon className="w-8 h-8 text-amber-400" />,
           action: "/profile",
+          isLink: true,
         },
         {
           title: "Create New List",
@@ -24,6 +26,7 @@ export default async function GetStarted() {
           bgColor: "bg-gray-700",
           icon: <ArrowRightCircleIcon className="w-8 h-8 text-amber-400" />,
           action: "/movies",
+          isLink: true,
         },
       ]
     : [
@@ -32,7 +35,8 @@ export default async function GetStarted() {
           description: "Create lists and save them for later.",
           bgColor: "bg-gray-600",
           icon: <UserCircleIcon className="w-8 h-8 text-amber-400" />,
-          action: "/profile", // Will redirect to the sign-in flow
+          action: null, // Placeholder for SignIn component
+          isLink: false,
         },
         {
           title: "Continue as Guest",
@@ -40,6 +44,7 @@ export default async function GetStarted() {
           bgColor: "bg-gray-700",
           icon: <ArrowRightCircleIcon className="w-8 h-8 text-amber-400" />,
           action: "/movies",
+          isLink: true,
         },
       ];
 
@@ -68,21 +73,48 @@ export default async function GetStarted() {
 
       {/* Action Cards */}
       <div className="grid w-full max-w-md gap-6 p-6 sm:grid-cols-2 sm:max-w-2xl">
-        {options.map((option, index) => (
-          <Link
-            key={index}
-            href={option.action}
-            className={`flex flex-col justify-start p-6 ${option.bgColor} rounded-lg shadow-md hover:shadow-lg transition hover:scale-105 group`}
-          >
-            <div className="flex items-center gap-3">
-              {option.icon}
-              <h3 className="text-xl font-bold text-gray-100 transition border-b-2 border-transparent group-hover:text-amber-400 group-hover:border-amber-400">
-                {option.title}
-              </h3>
-            </div>
-            <p className="mt-2 text-sm text-gray-200">{option.description}</p>
-          </Link>
-        ))}
+        {options.map((option, index) => {
+          if (option.isLink) {
+            return (
+              <Link
+                key={index}
+                href={option.action}
+                className={`flex flex-col justify-start p-6 ${option.bgColor} rounded-lg shadow-md hover:shadow-lg transition hover:scale-105 group`}
+              >
+                <div className="flex items-center gap-3">
+                  {option.icon}
+                  <h3 className="text-xl font-bold text-gray-100 transition border-b-2 border-transparent group-hover:text-amber-400 group-hover:border-amber-400">
+                    {option.title}
+                  </h3>
+                </div>
+                <p className="mt-2 text-sm text-gray-200">
+                  {option.description}
+                </p>
+              </Link>
+            );
+          } else {
+            return (
+              <div
+                key={index}
+                className={`flex flex-col justify-start p-6 ${option.bgColor} rounded-lg shadow-md hover:shadow-lg transition hover:scale-105 group`}
+              >
+                <div className="flex items-center gap-3">
+                  {option.icon}
+                  <h3 className="text-xl font-bold text-gray-100 transition border-b-2 border-transparent group-hover:text-amber-400 group-hover:border-amber-400">
+                    {option.title}
+                  </h3>
+                </div>
+                <p className="mt-2 text-sm text-gray-200">
+                  {option.description}
+                </p>
+                <div className="mt-4">
+                  {/* Render the SignIn component for the Sign In option */}
+                  <SignIn className="w-full px-4 py-2 font-semibold text-center text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500" />
+                </div>
+              </div>
+            );
+          }
+        })}
       </div>
 
       {/* Footer Section */}

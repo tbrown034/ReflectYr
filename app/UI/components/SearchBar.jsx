@@ -27,7 +27,7 @@ export default function SearchBar() {
       placeholder="Search movies..."
       defaultValue={searchParams.get("query") || ""}
       onChange={(e) => handleSearch(e.target.value)}
-      className="px-4 py-2 text-gray-100 placeholder-gray-400 bg-gray-700 rounded-lg focus:ring-2 focus:ring-amber-400 focus:outline-none"
+      className="px-4 py-2 text-gray-900 placeholder-gray-700 bg-gray-200 border-2 border-gray-900 rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
     />
   );
 }

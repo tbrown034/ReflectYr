@@ -29,7 +29,7 @@ const HeaderColorToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
+      className="p-2 font-semibold text-gray-900 transition rounded-lg bg-amber-400 hover:bg-amber-500"
     >
       {isDarkMode ? "Light Mode" : "Dark Mode"}
     </button>
