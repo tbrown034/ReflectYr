@@ -11,7 +11,7 @@ export default function FullList({ movies, userList, addToUserList }) {
         return (
           <li
             key={movie.id}
-            className="flex items-center justify-between p-4 transition-all duration-200 bg-gray-900 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-700"
+            className="flex items-center justify-between p-4 transition-all duration-200 bg-gray-100 rounded-lg shadow-sm dark:bg-gray-900 hover:shadow-md hover:bg-gray-700"
           >
             {/* Clickable Row */}
             <Link

@@ -42,7 +42,7 @@ const HeroBubbles = () => {
               {bubble.title}
             </h3>
           </div>
-          <p className="mt-2 text-sm text-gray-400">{bubble.description}</p>
+          <p className="mt-2 text-sm text-gray-200">{bubble.description}</p>
         </Link>
       ))}
     </div>
