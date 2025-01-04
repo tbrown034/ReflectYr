@@ -31,9 +31,16 @@ export default async function MovieDetailsPage({ params: paramsPromise }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen gap-6 p-6 text-gray-100 bg-gray-900">
-      <h1 className="text-4xl font-bold text-amber-400">{movie.title}</h1>
-      <p className="text-gray-300">{movie.overview}</p>
+    <div className="flex flex-col min-h-screen gap-6 p-6 ">
+      {/* Title */}
+      <h1 className="text-4xl font-bold text-amber-600 dark:text-amber-400">
+        {movie.title}
+      </h1>
+
+      {/* Overview */}
+      <p className="text-gray-700 dark:text-gray-300">{movie.overview}</p>
+
+      {/* Poster Image */}
       <Image
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
@@ -41,26 +48,39 @@ export default async function MovieDetailsPage({ params: paramsPromise }) {
         height={250}
         className="rounded-lg shadow-lg"
       />
+
+      {/* Release Date */}
       <p className="text-lg font-medium">
-        <strong className="text-amber-400">Release Date:</strong>{" "}
-        {formatReleaseDate(movie.release_date)}
-      </p>
-      <p className="text-lg font-medium">
-        <strong className="text-amber-400">Average Rating:</strong>{" "}
-        {formatRatingAsStars(movie.vote_average)} ({movie.vote_count} votes)
+        <strong className="text-amber-600 dark:text-amber-400">
+          Release Date:
+        </strong>{" "}
+        <span className="text-gray-800 dark:text-gray-200">
+          {formatReleaseDate(movie.release_date)}
+        </span>
       </p>
 
-      {/* Use AddToListClient for interactivity */}
+      {/* Average Rating */}
+      <p className="text-lg font-medium">
+        <strong className="text-amber-600 dark:text-amber-400">
+          Average Rating:
+        </strong>{" "}
+        <span className="text-gray-800 dark:text-gray-200">
+          {formatRatingAsStars(movie.vote_average)} ({movie.vote_count} votes)
+        </span>
+      </p>
+
+      {/* Add to List */}
       <AddToListClient movie={movie} />
 
-      <div className="flex gap-4 mt-4">
+      {/* Navigation Buttons */}
+      <div className="flex flex-wrap gap-4 mt-4">
         <Link href="/movies">
-          <button className="px-4 py-2 text-gray-900 rounded bg-amber-400 hover:bg-amber-500">
+          <button className="px-4 py-2 font-medium text-gray-900 rounded bg-amber-400 hover:bg-amber-500 dark:bg-amber-500 dark:text-gray-900 dark:hover:bg-amber-600">
             Go Back
           </button>
         </Link>
         <Link href="/">
-          <button className="px-4 py-2 text-gray-900 bg-gray-300 rounded hover:bg-gray-400">
+          <button className="px-4 py-2 font-medium text-gray-900 bg-gray-300 rounded hover:bg-gray-400 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600">
             Go to Home
           </button>
         </Link>

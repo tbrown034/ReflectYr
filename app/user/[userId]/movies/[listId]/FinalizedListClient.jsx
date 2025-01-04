@@ -66,29 +66,29 @@ export default function FinalizedListClient({ userId, listId }) {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen gap-6 p-6 text-gray-100 bg-gray-900">
+    <div className="flex flex-col items-center min-h-screen gap-6 p-6 ">
       {/* Header */}
-      <h1 className="text-3xl font-bold text-center text-amber-400 sm:text-4xl">
+      <h1 className="text-3xl font-bold text-center text-amber-600 sm:text-4xl dark:text-amber-400">
         {userName ? `${userName}'s` : ""} {listTitle}
       </h1>
 
       {/* Shareable Content */}
       <div
         id="shareable-content"
-        className="w-full max-w-3xl p-4 bg-gray-800 border-4 border-gray-700 rounded-lg shadow-lg"
+        className="w-full max-w-3xl p-4 bg-gray-200 border-4 border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700"
       >
         <ul className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {movies.map((movie, index) => (
             <li
               key={index}
-              className="transition-all duration-200 bg-gray-900 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-700"
+              className="transition-all duration-200 bg-gray-100 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-300 dark:bg-gray-900 dark:hover:bg-gray-700"
             >
               <Link
                 href={`/movies/${movie.id}`}
                 className="flex items-center gap-4 p-4"
               >
                 {/* Number */}
-                <span className="text-2xl font-bold text-gray-400">
+                <span className="text-2xl font-bold text-gray-600 dark:text-gray-400">
                   {index + 1}.
                 </span>
 
@@ -102,7 +102,7 @@ export default function FinalizedListClient({ userId, listId }) {
                 />
 
                 {/* Title */}
-                <p className="flex-1 text-sm font-semibold text-gray-100 sm:text-lg">
+                <p className="flex-1 text-sm font-semibold text-gray-800 sm:text-lg dark:text-gray-200">
                   {movie.title}
                 </p>
               </Link>
@@ -130,7 +130,7 @@ export default function FinalizedListClient({ userId, listId }) {
         {movies.length < 10 && !isEditing && (
           <button
             onClick={handleAddMore}
-            className="px-4 py-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
+            className="px-4 py-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500 dark:bg-amber-500 dark:text-gray-900 dark:hover:bg-amber-600"
           >
             Add More Movies
           </button>
@@ -140,14 +140,14 @@ export default function FinalizedListClient({ userId, listId }) {
         {!isEditing ? (
           <button
             onClick={toggleEditMode}
-            className="px-4 py-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
+            className="px-4 py-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500 dark:bg-amber-500 dark:text-gray-900 dark:hover:bg-amber-600"
           >
             Edit List
           </button>
         ) : (
           <button
             onClick={toggleEditMode}
-            className="px-4 py-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500"
+            className="px-4 py-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500 dark:bg-amber-500 dark:text-gray-900 dark:hover:bg-amber-600"
           >
             Finalize List
           </button>
@@ -156,7 +156,7 @@ export default function FinalizedListClient({ userId, listId }) {
         {/* Download Image Button */}
         <button
           onClick={handleDownloadImage}
-          className="px-4 py-2 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-800"
+          className="px-4 py-2 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
         >
           Download as Image
         </button>

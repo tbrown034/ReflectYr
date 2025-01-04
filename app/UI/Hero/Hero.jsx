@@ -25,7 +25,7 @@ export default async function Hero() {
             Profile
           </Link>
         ) : (
-          <SignIn className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-900 transition border-4 rounded-lg hover:scale-105 border-amber-400 bg-amber-400 hover:bg-amber-500" />
+          <SignIn className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-900 transition border-4 rounded-lg shadow-xl hover:scale-105 border-amber-400 bg-amber-400 hover:bg-amber-500" />
         )}
 
         {/* Get Started Button */}

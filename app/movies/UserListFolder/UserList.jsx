@@ -3,13 +3,7 @@ import UserListButtons from "./UserListButtons";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function UserList({
-  userList,
-  removeMovie,
-  moveUp,
-  moveDown,
-  setUserList,
-}) {
+export default function UserList({ userList, removeMovie, setUserList }) {
   const placeholderMovies = [
     "Movie 1",
     "Movie 2",
@@ -24,6 +18,30 @@ export default function UserList({
   ];
 
   const moviesToDisplay = userList.length > 0 ? userList : placeholderMovies;
+
+  // Move movie up in the list
+  const moveUp = (index) => {
+    if (index === 0) return; // Can't move the first item up
+    const updatedList = [...userList];
+    [updatedList[index - 1], updatedList[index]] = [
+      updatedList[index],
+      updatedList[index - 1],
+    ];
+    setUserList(updatedList);
+    localStorage.setItem("userList", JSON.stringify(updatedList));
+  };
+
+  // Move movie down in the list
+  const moveDown = (index) => {
+    if (index === userList.length - 1) return; // Can't move the last item down
+    const updatedList = [...userList];
+    [updatedList[index], updatedList[index + 1]] = [
+      updatedList[index + 1],
+      updatedList[index],
+    ];
+    setUserList(updatedList);
+    localStorage.setItem("userList", JSON.stringify(updatedList));
+  };
 
   return (
     <section className="p-4 bg-gray-100 rounded-lg shadow-lg dark:bg-gray-900">
