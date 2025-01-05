@@ -2,21 +2,6 @@
   "extends": "next/core-web-vitals",
   "rules": {
     // Disable "react/no-unescaped-entities"
-    "react/no-unescaped-entities": "off",
-
-    // Example: Turn off PropTypes requirement (useful with TypeScript)
-    "react/prop-types": "off",
-
-    // Example: Customize "no-unused-vars" for TypeScript
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      { "argsIgnorePattern": "^_" }
-    ],
-
-    // Example: Allow console logs (you can set it to "warn" for development)
-    "no-console": "off",
-
-    // Example: Allow explicit "any" in TypeScript
-    "@typescript-eslint/no-explicit-any": "off"
+    "react/no-unescaped-entities": "off"
   }
 }
