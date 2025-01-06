@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import Header from "./UI/Header/Header";
 import Footer from "./UI/Footer";
+
 import "./globals.css";
 
 const geistSans = localFont({
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} p-2 flex flex-col min-h-screen  justify-between bg-gray-300 text-gray-900 dark:bg-gray-900 dark:text-gray-200 `}
       >
         <Header />
+
         {children}
         <Footer />
       </body>

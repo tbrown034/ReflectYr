@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import getGuestUserId from "@/utils/getGuestUserId";
 
 export default function UserListButtons({ userList, setUserList }) {
   const router = useRouter();
@@ -12,19 +11,24 @@ export default function UserListButtons({ userList, setUserList }) {
       return;
     }
 
-    const listId = Math.random().toString(36).substring(2, 10);
-    const userId = getGuestUserId();
+    // Generate a unique temporary list ID
+    const temporaryListId = Math.random().toString(36).substring(2, 10);
 
+    // Save the list in localStorage using the temporaryListId
     localStorage.setItem(
-      `userList-${userId}-${listId}`,
+      `temporaryList-${temporaryListId}`,
       JSON.stringify(userList)
     );
 
-    router.push(`/user/${userId}/movies/${listId}`);
+    // Redirect to the dynamic temp-list route with the temporaryListId
+    router.push(`/temp-list/${temporaryListId}`);
   };
 
   const handleClear = () => {
+    // Clear the list in local state
     setUserList([]);
+
+    // Clear all temporary list data from localStorage
     localStorage.setItem("userList", "[]");
   };
 

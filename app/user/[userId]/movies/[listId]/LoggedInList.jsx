@@ -1,25 +1,32 @@
 // "use client";
 
-// import { auth } from "@/auth";
-// import { useState, useEffect } from "react";
+// import { useEffect, useState } from "react";
 // import UserListControls from "@/app/movies/UserListFolder/UserListControls";
 // import html2canvas from "html2canvas";
 // import { useRouter } from "next/navigation";
-// import Link from "next/link";
 // import Image from "next/image";
 
-// export default async function FinalizedListClient({ userId, listId }) {
-//   const session = await auth(); // Fetch session directly like in get-started
+// export default function LoggedInList({ userId, listId }) {
 //   const [movies, setMovies] = useState([]);
 //   const [listTitle, setListTitle] = useState("My Top Movies of 2024");
 //   const [isEditing, setIsEditing] = useState(false);
 //   const router = useRouter();
 
-//   // Load the list on first render
+//   // Load the list from localStorage
 //   useEffect(() => {
+//     console.log("userId:", userId, "listId:", listId);
+
+//     // Retrieve the list from localStorage
 //     const storedList = localStorage.getItem(`userList-${userId}-${listId}`);
+
 //     if (storedList) {
-//       setMovies(JSON.parse(storedList));
+//       try {
+//         setMovies(JSON.parse(storedList));
+//       } catch (error) {
+//         console.error("Error parsing stored list:", error);
+//       }
+//     } else {
+//       console.log("No list found in localStorage for the given key.");
 //     }
 //   }, [userId, listId]);
 
@@ -48,40 +55,12 @@
 //   };
 
 //   const removeMovie = (index) => {
-//     setMovies(movies.filter((_, i) => i !== index));
+//     const updatedList = movies.filter((_, i) => i !== index);
+//     setMovies(updatedList);
 //   };
 
 //   // Navigate to add more movies
 //   const handleAddMore = () => router.push("/movies");
-
-//   // Save the list to the database
-//   const saveListToDB = async () => {
-//     if (!session) return;
-
-//     try {
-//       const response = await fetch("/api/save-list", {
-//         method: "POST",
-//         body: JSON.stringify({
-//           userId: session.user.id,
-//           listName: listTitle || `${session.user.name}'s Top Movies`,
-//           movies,
-//         }),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
-
-//       if (response.ok) {
-//         alert("List saved successfully!");
-//         router.push(`/user/${session.user.id}/movies`);
-//       } else {
-//         alert("Failed to save the list.");
-//       }
-//     } catch (error) {
-//       console.error("Error saving the list:", error);
-//       alert("An error occurred while saving the list.");
-//     }
-//   };
 
 //   // Download the list as an image
 //   const handleDownloadImage = async () => {
@@ -90,8 +69,6 @@
 //     const canvas = await html2canvas(element, {
 //       scale: 2,
 //       useCORS: true,
-//       allowTaint: false,
-//       logging: false,
 //     });
 
 //     const link = document.createElement("a");
@@ -100,14 +77,32 @@
 //     link.click();
 //   };
 
+//   if (movies.length === 0) {
+//     return (
+//       <div className="flex flex-col items-center min-h-screen gap-6 p-6">
+//         <h1 className="text-3xl font-bold text-center text-amber-600 sm:text-4xl dark:text-amber-400">
+//           {listTitle}
+//         </h1>
+//         <p className="text-center text-gray-500">
+//           No movies in your list yet. <br />
+//           Click "Add More Movies" to start building your list!
+//         </p>
+//         <button
+//           onClick={handleAddMore}
+//           className="px-4 py-2 text-sm font-semibold text-gray-900 transition rounded bg-amber-400 hover:bg-amber-500 dark:bg-amber-500 dark:text-gray-900 dark:hover:bg-amber-600"
+//         >
+//           Add More Movies
+//         </button>
+//       </div>
+//     );
+//   }
+
 //   return (
 //     <div className="flex flex-col items-center min-h-screen gap-6 p-6">
-//       {/* Header */}
 //       <h1 className="text-3xl font-bold text-center text-amber-600 sm:text-4xl dark:text-amber-400">
-//         {session?.user?.name ? `${session.user.name}'s` : ""} {listTitle}
+//         {listTitle}
 //       </h1>
 
-//       {/* Shareable Content */}
 //       <div
 //         id="shareable-content"
 //         className="w-full max-w-3xl p-4 bg-gray-200 border-4 border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700"
@@ -118,10 +113,7 @@
 //               key={index}
 //               className="transition-all duration-200 bg-gray-100 rounded-lg shadow-sm hover:shadow-md hover:bg-gray-300 dark:bg-gray-900 dark:hover:bg-gray-700"
 //             >
-//               <Link
-//                 href={`/movies/${movie.id}`}
-//                 className="flex items-center gap-4 p-4"
-//               >
+//               <div className="flex items-center gap-4 p-4">
 //                 <span className="text-2xl font-bold text-gray-600 dark:text-gray-400">
 //                   {index + 1}.
 //                 </span>
@@ -135,24 +127,21 @@
 //                 <p className="flex-1 text-sm font-semibold text-gray-800 sm:text-lg dark:text-gray-200">
 //                   {movie.title}
 //                 </p>
-//               </Link>
+//               </div>
 //               {isEditing && (
-//                 <div className="flex items-center gap-2 p-4 sm:gap-4">
-//                   <UserListControls
-//                     onMoveUp={index > 0 ? () => moveUp(index) : null}
-//                     onMoveDown={
-//                       index < movies.length - 1 ? () => moveDown(index) : null
-//                     }
-//                     onRemove={() => removeMovie(index)}
-//                   />
-//                 </div>
+//                 <UserListControls
+//                   onMoveUp={index > 0 ? () => moveUp(index) : null}
+//                   onMoveDown={
+//                     index < movies.length - 1 ? () => moveDown(index) : null
+//                   }
+//                   onRemove={() => removeMovie(index)}
+//                 />
 //               )}
 //             </li>
 //           ))}
 //         </ul>
 //       </div>
 
-//       {/* Action Buttons */}
 //       <div className="flex flex-wrap items-center justify-center gap-4 sm:justify-start">
 //         {movies.length < 10 && !isEditing && (
 //           <button
@@ -176,18 +165,6 @@
 //           >
 //             Finalize List
 //           </button>
-//         )}
-//         {session ? (
-//           <button
-//             onClick={saveListToDB}
-//             className="px-4 py-2 text-sm font-semibold text-gray-900 transition bg-green-500 rounded hover:bg-green-600 dark:bg-green-500 dark:hover:bg-green-600"
-//           >
-//             Save List
-//           </button>
-//         ) : (
-//           <p className="px-4 py-2 text-sm font-semibold text-gray-500">
-//             Sign in to save your list.
-//           </p>
 //         )}
 //         <button
 //           onClick={handleDownloadImage}

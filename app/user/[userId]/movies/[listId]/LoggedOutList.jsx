@@ -1,6 +1,5 @@
 // "use client";
 
-// import { auth } from "@/auth";
 // import { useState, useEffect } from "react";
 // import UserListControls from "@/app/movies/UserListFolder/UserListControls";
 // import html2canvas from "html2canvas";
@@ -8,14 +7,13 @@
 // import Link from "next/link";
 // import Image from "next/image";
 
-// export default async function FinalizedListClient({ userId, listId }) {
-//   const session = await auth(); // Fetch session directly like in get-started
+// export default function LoggedOutList({ userId, listId }) {
 //   const [movies, setMovies] = useState([]);
 //   const [listTitle, setListTitle] = useState("My Top Movies of 2024");
 //   const [isEditing, setIsEditing] = useState(false);
 //   const router = useRouter();
 
-//   // Load the list on first render
+//   // Load the list from localStorage
 //   useEffect(() => {
 //     const storedList = localStorage.getItem(`userList-${userId}-${listId}`);
 //     if (storedList) {
@@ -48,40 +46,12 @@
 //   };
 
 //   const removeMovie = (index) => {
-//     setMovies(movies.filter((_, i) => i !== index));
+//     const updatedList = movies.filter((_, i) => i !== index);
+//     setMovies(updatedList);
 //   };
 
 //   // Navigate to add more movies
 //   const handleAddMore = () => router.push("/movies");
-
-//   // Save the list to the database
-//   const saveListToDB = async () => {
-//     if (!session) return;
-
-//     try {
-//       const response = await fetch("/api/save-list", {
-//         method: "POST",
-//         body: JSON.stringify({
-//           userId: session.user.id,
-//           listName: listTitle || `${session.user.name}'s Top Movies`,
-//           movies,
-//         }),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
-
-//       if (response.ok) {
-//         alert("List saved successfully!");
-//         router.push(`/user/${session.user.id}/movies`);
-//       } else {
-//         alert("Failed to save the list.");
-//       }
-//     } catch (error) {
-//       console.error("Error saving the list:", error);
-//       alert("An error occurred while saving the list.");
-//     }
-//   };
 
 //   // Download the list as an image
 //   const handleDownloadImage = async () => {
@@ -104,7 +74,7 @@
 //     <div className="flex flex-col items-center min-h-screen gap-6 p-6">
 //       {/* Header */}
 //       <h1 className="text-3xl font-bold text-center text-amber-600 sm:text-4xl dark:text-amber-400">
-//         {session?.user?.name ? `${session.user.name}'s` : ""} {listTitle}
+//         {listTitle}
 //       </h1>
 
 //       {/* Shareable Content */}
@@ -176,18 +146,6 @@
 //           >
 //             Finalize List
 //           </button>
-//         )}
-//         {session ? (
-//           <button
-//             onClick={saveListToDB}
-//             className="px-4 py-2 text-sm font-semibold text-gray-900 transition bg-green-500 rounded hover:bg-green-600 dark:bg-green-500 dark:hover:bg-green-600"
-//           >
-//             Save List
-//           </button>
-//         ) : (
-//           <p className="px-4 py-2 text-sm font-semibold text-gray-500">
-//             Sign in to save your list.
-//           </p>
 //         )}
 //         <button
 //           onClick={handleDownloadImage}
