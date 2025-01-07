@@ -19,7 +19,7 @@ export default function Title({ listTitle, isEditing, onTitleChange, onSave }) {
   }
 
   return (
-    <h1 className="text-4xl font-extrabold text-center text-amber-600 sm:text-5xl dark:text-amber-400 drop-shadow-md">
+    <h1 className="text-2xl font-extrabold text-center md:text-4xl text-amber-600 dark:text-amber-400 drop-shadow-md">
       {listTitle}
     </h1>
   );
