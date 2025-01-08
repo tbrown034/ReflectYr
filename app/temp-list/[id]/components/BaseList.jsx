@@ -2,24 +2,20 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import Title from "./Title";
 import ActionButtons from "./ActionButtons";
 import UserListControls from "@/app/movies/UserListFolder/UserListControls";
-import html2canvas from "html2canvas";
+import Image from "next/image";
+import ShareModal from "./ShareModal";
 
-export default function BaseList({
-  temporaryListId,
-  initialTitle,
-  allowSave = false,
-}) {
+export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
   const [movies, setMovies] = useState([]);
   const [listTitle, setListTitle] = useState(initialTitle);
   const [isEditing, setIsEditing] = useState(false);
   const [isTitleEditing, setIsTitleEditing] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const router = useRouter();
 
-  // Load movies from localStorage
   useEffect(() => {
     const storedList = localStorage.getItem(`temporaryList-${temporaryListId}`);
     if (storedList) {
@@ -33,13 +29,8 @@ export default function BaseList({
 
   const handleAddMore = () => router.push("/movies");
 
-  const handleDownloadImage = async () => {
-    const element = document.getElementById("shareable-content");
-    const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-    const link = document.createElement("a");
-    link.download = `${listTitle.replace(/\s+/g, "_")}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+  const toggleShareModal = () => {
+    setIsShareModalOpen(!isShareModalOpen);
   };
 
   const handleSaveList = () => {
@@ -78,11 +69,11 @@ export default function BaseList({
 
   return (
     <div className="flex flex-col items-center gap-6 p-4">
-      {/* Title Section */}
       <div
         id="shareable-content"
-        className="flex flex-col gap-6 p-4 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800"
+        className="flex flex-col items-center gap-6 p-6 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800"
       >
+        {/* Title */}
         <Title
           listTitle={listTitle}
           isEditing={isTitleEditing}
@@ -91,29 +82,33 @@ export default function BaseList({
         />
 
         {/* Movies Section */}
-        <div className="w-full max-w-6xl p-4">
-          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="w-full max-w-6xl">
+          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {movies.map((movie, index) => (
               <li
                 key={index}
                 className="flex flex-col items-center gap-4 p-4 transition-all duration-200 bg-white rounded-lg shadow-lg hover:scale-105 hover:shadow-xl dark:bg-gray-700 dark:hover:bg-gray-600"
               >
-                {/* Ranking Number */}
-                <div className="flex items-center justify-center w-10 h-10 text-lg font-bold text-white bg-blue-500 rounded-full ">
-                  {index + 1}.
+                <div className="flex items-center gap-2">
+                  {/* Ranking Number */}
+                  <div className="flex items-center justify-center w-10 h-10 text-lg font-bold text-white bg-blue-500 rounded-full">
+                    {index + 1}
+                  </div>
+
+                  {/* Movie Poster */}
+                  <div className="w-32 h-48 overflow-hidden rounded-md shadow-md">
+                    <Image
+                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                      alt={movie.title}
+                      width={150}
+                      height={225}
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
 
-                {/* Movie Poster */}
-                <Image
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                  alt={movie.title}
-                  width={150}
-                  height={225}
-                  className="rounded-md shadow-md"
-                />
-
                 {/* Movie Title */}
-                <p className="text-sm font-semibold text-center text-gray-800  sm:text-base dark:text-gray-200">
+                <p className="mt-2 text-sm font-semibold text-center text-gray-800 sm:text-base dark:text-gray-200">
                   {movie.title}
                 </p>
 
@@ -136,6 +131,7 @@ export default function BaseList({
           </ul>
         </div>
       </div>
+
       {/* Action Buttons */}
       <ActionButtons
         isEditing={isEditing}
@@ -145,8 +141,17 @@ export default function BaseList({
         onFinalizeList={() => setIsEditing(false)}
         onEditTitle={() => setIsTitleEditing(true)}
         onSaveList={handleSaveList}
-        onDownloadImage={handleDownloadImage}
+        onDownloadImage={toggleShareModal}
       />
+
+      {/* Share Modal */}
+      {isShareModalOpen && (
+        <ShareModal
+          listTitle={listTitle}
+          movies={movies}
+          onClose={toggleShareModal}
+        />
+      )}
     </div>
   );
 }
