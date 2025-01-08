@@ -20,39 +20,37 @@ export default function ShareModal({ listTitle, movies, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+      onClick={onClose} // Closes the modal on clicking outside
     >
       <div
-        className="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800 md:max-w-xl"
-        onClick={(e) => e.stopPropagation()}
+        className="relative max-h-[90vh] w-full max-w-md p-4 bg-white rounded-lg shadow-lg dark:bg-gray-800 md:max-w-lg"
+        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
       >
         {/* Shareable Content */}
         <div
           id="shareable-grid"
-          className="flex flex-col items-center gap-6 p-4 bg-gray-100 rounded-lg dark:bg-gray-900"
+          className="flex flex-col items-center gap-4 p-4 overflow-y-auto bg-gray-100 rounded-lg dark:bg-gray-900 max-h-[60vh]"
         >
           {/* Title */}
-          <h2 className="mb-4 text-xl font-bold text-center text-gray-800 sm:text-2xl dark:text-gray-100">
+          <h2 className="text-lg font-bold text-center text-gray-800 sm:text-xl dark:text-gray-100">
             {listTitle}
           </h2>
 
           {/* Movies Grid */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             {movies.slice(0, 10).map((movie, index) => (
               <div
                 key={index}
-                className={`flex flex-col items-center gap-2 text-center ${
-                  index >= 9 ? "col-span-full justify-center" : ""
-                }`}
+                className="flex flex-col items-center gap-1 text-center"
               >
                 {/* Ranking Number */}
-                <div className="text-lg font-bold text-blue-500 sm:text-xl dark:text-amber-400">
+                <div className="text-sm font-bold text-blue-500 sm:text-base dark:text-amber-400">
                   {index + 1}
                 </div>
 
                 {/* Movie Poster */}
-                <div className="w-24 overflow-hidden rounded-md shadow-md h-36 sm:w-32 sm:h-48">
+                <div className="w-20 overflow-hidden rounded-md shadow-md h-28 sm:w-24 sm:h-36">
                   <Image
                     src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     alt={movie.title}

@@ -52,7 +52,7 @@ export default function ActionButtons({
         onClick={onDownloadImage}
         className="px-4 py-2 text-sm font-semibold text-gray-100 transition bg-blue-600 rounded hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
       >
-        Download as Image
+        Share List
       </button>
     </div>
   );

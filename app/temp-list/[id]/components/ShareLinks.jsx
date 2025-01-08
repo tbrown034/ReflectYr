@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FaTwitter, FaFacebook, FaEnvelope, FaDownload } from "react-icons/fa"; // Import appropriate icons
 
 export default function ShareLinks({ listTitle, onDownloadImage, onClose }) {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -38,37 +39,49 @@ export default function ShareLinks({ listTitle, onDownloadImage, onClose }) {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-4 mt-4">
-      <button
-        onClick={handleShareTwitter}
-        className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-      >
-        Share on Twitter
-      </button>
-      <button
-        onClick={handleShareFacebook}
-        className="px-4 py-2 text-white bg-blue-700 rounded-lg hover:bg-blue-800"
-      >
-        Share on Facebook
-      </button>
-      <button
-        onClick={handleSendEmail}
-        className="px-4 py-2 text-white rounded-lg bg-amber-500 hover:bg-amber-600"
-      >
-        Email My List
-      </button>
-      <button
-        onClick={handleDownloadClick}
-        disabled={isDownloading}
-        className={`px-4 py-2 text-white bg-green-500 rounded-lg ${
-          isDownloading ? "cursor-not-allowed opacity-50" : "hover:bg-green-600"
-        }`}
-      >
-        {isDownloading ? "Downloading..." : "Download Image"}
-      </button>
+    <div className="flex flex-col items-center gap-3 mt-4 text-xs">
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
+          <button
+            onClick={handleShareTwitter}
+            className="flex items-center gap-2 p-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+          >
+            <FaTwitter className="w-4 h-4 text-sm" />
+            Share on Twitter
+          </button>
+          <button
+            onClick={handleShareFacebook}
+            className="flex items-center gap-2 p-2 font-semibold text-white bg-blue-700 rounded-lg hover:bg-blue-800"
+          >
+            <FaFacebook className="w-4 h-4" />
+            Share on Facebook
+          </button>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={handleSendEmail}
+            className="flex items-center gap-2 p-2 font-semibold text-white rounded-lg bg-amber-500 hover:bg-amber-600"
+          >
+            <FaEnvelope className="w-4 h-4" />
+            Email My List
+          </button>
+          <button
+            onClick={handleDownloadClick}
+            disabled={isDownloading}
+            className={`flex items-center gap-2 p-2 font-semibold text-white rounded-lg ${
+              isDownloading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-500 hover:bg-green-600"
+            }`}
+          >
+            <FaDownload className="w-4 h-4" />
+            {isDownloading ? "Downloading..." : "Download Image"}
+          </button>
+        </div>
+      </div>
       <button
         onClick={onClose}
-        className="px-4 py-2 text-white bg-gray-500 rounded-lg hover:bg-gray-600"
+        className="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white bg-gray-500 rounded-lg hover:bg-gray-600"
       >
         Close
       </button>
