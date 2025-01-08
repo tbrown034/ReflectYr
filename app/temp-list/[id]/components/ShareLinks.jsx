@@ -39,7 +39,7 @@ export default function ShareLinks({ listTitle, onDownloadImage, onClose }) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-3 mt-4 text-xs">
+    <div className="flex flex-col items-center gap-2 mt-4 text-xs">
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
           <button
