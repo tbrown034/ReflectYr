@@ -24,7 +24,7 @@ export default function ShareModal({ listTitle, movies, onClose }) {
       onClick={onClose} // Close modal on clicking outside
     >
       <div
-        className="relative w-full max-w-lg p-3 bg-white rounded-lg shadow-lg dark:bg-gray-800 md:max-w-md"
+        className="relative w-full max-w-lg p-3 bg-white rounded-lg shadow-lg dark:bg-gray-800 md:max-w-xl lg:max-w-2xl"
         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
       >
         {/* Shareable Content */}
