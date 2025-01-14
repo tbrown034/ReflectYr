@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Title from "./Title";
 import ActionButtons from "./ActionButtons";
-import UserListControls from "@/app/movies/UserListFolder/UserListControls";
-import Image from "next/image";
+import MoviesGrid from "./MoviesGrid"; // Updated import
 import ShareModal from "./ShareModal";
 
 export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
@@ -39,42 +38,28 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
       return;
     }
 
-    console.log("Preparing the list to save...");
-    console.log("Title:", listTitle);
-    console.log("Movies:", movies);
-
     const payload = {
       title: listTitle,
       movies: movies.map((movie, index) => ({
-        tmdb_id: movie.id, // Assuming `id` is from TMDB API response
+        tmdb_id: movie.id,
         position: index + 1,
       })),
     };
 
-    console.log("Payload to be sent:", payload);
-
     try {
       const response = await fetch("/api/save-list", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      console.log("Response status:", response.status);
-
       if (response.ok) {
-        const result = await response.json();
-        console.log("List saved successfully:", result);
         alert("List saved successfully!");
       } else {
         const errorMessage = await response.text();
-        console.error("Failed to save list:", errorMessage);
         alert(`Error: ${errorMessage}`);
       }
     } catch (error) {
-      console.error("An error occurred while saving the list:", error);
       alert("An error occurred. Please try again.");
     }
   };
@@ -100,7 +85,6 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
         id="shareable-content"
         className="flex flex-col items-center gap-6 p-6 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800"
       >
-        {/* Title */}
         <Title
           listTitle={listTitle}
           isEditing={isTitleEditing}
@@ -108,58 +92,15 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
           onSave={() => setIsTitleEditing(false)}
         />
 
-        {/* Movies Section */}
-        <div className="w-full max-w-6xl">
-          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {movies.map((movie, index) => (
-              <li
-                key={index}
-                className="flex flex-col items-center gap-4 p-4 transition-all duration-200 bg-white rounded-lg shadow-lg hover:scale-105 hover:shadow-xl dark:bg-gray-700 dark:hover:bg-gray-600"
-              >
-                <div className="flex items-center gap-2">
-                  {/* Ranking Number */}
-                  <div className="flex items-center justify-center w-10 h-10 text-lg font-bold text-white bg-blue-500 rounded-full">
-                    {index + 1}
-                  </div>
-
-                  {/* Movie Poster */}
-                  <div className="w-32 h-48 overflow-hidden rounded-md shadow-md">
-                    <Image
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      alt={movie.title}
-                      width={150}
-                      height={225}
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-
-                {/* Movie Title */}
-                <p className="mt-2 text-sm font-semibold text-center text-gray-800 sm:text-base dark:text-gray-200">
-                  {movie.title}
-                </p>
-
-                {/* Edit Controls */}
-                {isEditing && (
-                  <div className="mt-4">
-                    <UserListControls
-                      onMoveUp={index > 0 ? () => handleMoveUp(index) : null}
-                      onMoveDown={
-                        index < movies.length - 1
-                          ? () => handleMoveDown(index)
-                          : null
-                      }
-                      onRemove={() => handleRemove(index)}
-                    />
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* MoviesGrid */}
+        <MoviesGrid
+          movies={movies}
+          isEditing={isEditing}
+          onMoveDown={handleMoveDown}
+          onRemove={handleRemove}
+        />
       </div>
 
-      {/* Action Buttons */}
       <ActionButtons
         isEditing={isEditing}
         isTitleEditing={isTitleEditing}
@@ -171,7 +112,6 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
         onDownloadImage={toggleShareModal}
       />
 
-      {/* Share Modal */}
       {isShareModalOpen && (
         <ShareModal
           listTitle={listTitle}
