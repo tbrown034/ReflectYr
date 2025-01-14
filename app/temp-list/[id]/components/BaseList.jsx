@@ -33,23 +33,50 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
     setIsShareModalOpen(!isShareModalOpen);
   };
 
-  const handleSaveList = () => {
-    if (allowSave) {
-      console.log("List Saved:", {
-        title: listTitle,
-        topMovie: movies[0]?.title,
-      });
+  const handleSaveList = async () => {
+    if (!allowSave) {
+      console.warn("Saving is not allowed.");
+      return;
     }
-  };
 
-  const handleMoveUp = (index) => {
-    if (index === 0) return;
-    const updatedList = [...movies];
-    [updatedList[index - 1], updatedList[index]] = [
-      updatedList[index],
-      updatedList[index - 1],
-    ];
-    setMovies(updatedList);
+    console.log("Preparing the list to save...");
+    console.log("Title:", listTitle);
+    console.log("Movies:", movies);
+
+    const payload = {
+      title: listTitle,
+      movies: movies.map((movie, index) => ({
+        tmdb_id: movie.id, // Assuming `id` is from TMDB API response
+        position: index + 1,
+      })),
+    };
+
+    console.log("Payload to be sent:", payload);
+
+    try {
+      const response = await fetch("/api/save-list", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      console.log("Response status:", response.status);
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("List saved successfully:", result);
+        alert("List saved successfully!");
+      } else {
+        const errorMessage = await response.text();
+        console.error("Failed to save list:", errorMessage);
+        alert(`Error: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error("An error occurred while saving the list:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   const handleMoveDown = (index) => {
