@@ -1,4 +1,3 @@
-// Location: next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -14,6 +13,12 @@ const nextConfig = {
         hostname: "picsum.photos", // Picsum's image domain
         port: "",
         pathname: "/**", // Allows all paths under picsum.photos
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com", // Google user profile pictures
+        port: "",
+        pathname: "/**", // Allows all paths under this domain
       },
     ],
   },
