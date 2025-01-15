@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { fetchMovieDetails } from "@/app/api/movies";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import SignOut from "../UI/components/SignOut";
-import CloseButton from "./DeleteButton";
+import DeleteButton from "./DeleteButton";
 import Link from "next/link";
 
 const ProfilePage = async () => {
@@ -25,9 +25,12 @@ const ProfilePage = async () => {
   const user = session.user;
 
   // Fetch lists
+  console.log("Fetching lists for user:", user.id);
+
   const lists = await db.sql`
     SELECT * FROM lists WHERE user_id = ${user.id} ORDER BY created_at DESC;
   `;
+  console.log("Fetched lists:", lists.rows);
 
   // Fetch list items and resolve movie titles
   const listsWithItems = await Promise.all(
@@ -37,10 +40,18 @@ const ProfilePage = async () => {
         WHERE list_id = ${list.list_id}
         ORDER BY position ASC LIMIT 10;
       `;
+      console.log(
+        `Fetched list items for list ${list.list_id}:`,
+        listItems.rows
+      );
 
       const itemsWithTitles = await Promise.all(
         listItems.rows.map(async (item) => {
           const movie = await fetchMovieDetails(item.tmdb_id);
+          console.log(
+            `Fetched movie details for TMDB ID ${item.tmdb_id}:`,
+            movie
+          );
           return { ...item, title: movie.title };
         })
       );
@@ -49,9 +60,10 @@ const ProfilePage = async () => {
     })
   );
 
+  console.log("Resolved lists with items:", listsWithItems);
+
   return (
     <div className="flex flex-col items-center min-h-screen p-8 text-gray-900 bg-gray-300 dark:bg-gray-900 dark:text-gray-200">
-      {/* Profile Header */}
       <div className="w-full max-w-4xl p-6 text-center">
         <UserCircleIcon className="w-20 h-20 mx-auto text-amber-400" />
         <h1 className="mt-4 text-4xl font-extrabold text-amber-500">
@@ -62,7 +74,6 @@ const ProfilePage = async () => {
         </p>
       </div>
 
-      {/* User Lists */}
       <div className="w-full max-w-4xl p-6">
         <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
           Your Lists
@@ -78,8 +89,8 @@ const ProfilePage = async () => {
                 key={list.list_id}
                 className="relative flex flex-col p-4 bg-gray-600 rounded-lg shadow-md"
               >
-                {/* Close Button */}
-                <CloseButton listId={list.list_id} />
+                {/* Delete Button */}
+                <DeleteButton listId={list.list_id} />
 
                 {/* List Title and Creation Date */}
                 <div>
@@ -103,7 +114,6 @@ const ProfilePage = async () => {
                   ))}
                 </ul>
 
-                {/* Note if there are more items */}
                 {list.items.length === 10 && (
                   <p className="mt-2 text-sm italic text-gray-400">
                     + More items not shown...
@@ -115,7 +125,6 @@ const ProfilePage = async () => {
         )}
       </div>
 
-      {/* Actions */}
       <div className="mt-6 space-y-4">
         <Link
           href="/movies"

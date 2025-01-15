@@ -6,6 +6,8 @@ const DeleteButton = ({ listId }) => {
   const handleDelete = async () => {
     if (confirm("Are you sure you want to delete this list?")) {
       try {
+        console.log("Deleting list with ID:", listId);
+
         const response = await fetch(`/api/delete-list`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -14,9 +16,10 @@ const DeleteButton = ({ listId }) => {
 
         if (response.ok) {
           alert("List deleted successfully.");
-          // Refresh the page after deletion
-          location.reload();
+          location.reload(); // Refresh the page after deletion
         } else {
+          const error = await response.text();
+          console.error("Failed to delete list:", error);
           alert("Failed to delete the list.");
         }
       } catch (error) {
