@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { fetchMovieDetails } from "@/app/api/movies";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import SignOut from "../UI/components/SignOut";
+import Link from "next/link";
 
 const ProfilePage = async () => {
   const session = await auth();
@@ -114,9 +115,12 @@ const ProfilePage = async () => {
 
       {/* Actions */}
       <div className="mt-6 space-y-4">
-        <button className="w-full px-4 py-2 font-semibold text-center text-gray-900 bg-green-500 rounded hover:bg-green-600">
+        <Link
+          href="/movies"
+          className="w-full px-4 py-2 font-semibold text-center text-gray-900 bg-green-500 rounded hover:bg-green-600"
+        >
           Create New List
-        </button>
+        </Link>
         <div className="w-full px-4 py-2 font-semibold text-center text-gray-900 bg-red-500 rounded hover:bg-red-600">
           <SignOut />
         </div>
