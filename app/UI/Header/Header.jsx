@@ -2,7 +2,7 @@ import HeaderNavBar from "./HeaderNavBar";
 import HeaderBrand from "./HeaderBrand";
 import HeaderMobileMenu from "./HeaderMobileMenu";
 import HeaderSignInAndOut from "./HeaderSignInAndOut";
-import HeaderColorToggle from "./HeaderColorToggle";
+import DarkModeToggle from "./DarkModeToggle";
 
 const Header = () => {
   return (
@@ -14,8 +14,9 @@ const Header = () => {
       <div className="flex items-center gap-4">
         <div className="hidden gap-4 sm:flex">
           <HeaderSignInAndOut />
-          <HeaderColorToggle />
         </div>
+        <DarkModeToggle />
+
         <HeaderMobileMenu className="md:hidden" />
       </div>
     </header>
