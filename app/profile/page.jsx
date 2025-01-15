@@ -3,13 +3,13 @@ import { db } from "@/lib/db";
 import { fetchMovieDetails } from "@/app/api/movies";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import SignOut from "../UI/components/SignOut";
+import CloseButton from "./DeleteButton";
 import Link from "next/link";
 
 const ProfilePage = async () => {
   const session = await auth();
 
   if (!session?.user) {
-    // User not signed in
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-8 text-gray-900 bg-gray-300 dark:bg-gray-900 dark:text-gray-200">
         <h1 className="mb-4 text-4xl font-extrabold text-amber-500">
@@ -38,7 +38,6 @@ const ProfilePage = async () => {
         ORDER BY position ASC LIMIT 10;
       `;
 
-      // Fetch movie details for each TMDB ID
       const itemsWithTitles = await Promise.all(
         listItems.rows.map(async (item) => {
           const movie = await fetchMovieDetails(item.tmdb_id);
@@ -77,8 +76,11 @@ const ProfilePage = async () => {
             {listsWithItems.map((list) => (
               <div
                 key={list.list_id}
-                className="flex flex-col p-4 bg-gray-600 rounded-lg shadow-md"
+                className="relative flex flex-col p-4 bg-gray-600 rounded-lg shadow-md"
               >
+                {/* Close Button */}
+                <CloseButton listId={list.list_id} />
+
                 {/* List Title and Creation Date */}
                 <div>
                   <h3 className="text-lg font-bold text-gray-100">
