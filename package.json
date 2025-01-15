@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/pg-adapter": "^1.7.4",
+    "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
     "@neondatabase/serverless": "^0.10.4",
     "@vercel/postgres": "^0.10.0",
