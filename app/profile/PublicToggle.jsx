@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Switch } from "@headlessui/react";
 
 const PublicToggle = ({ listId, isPublic, onToggle }) => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,7 @@ const PublicToggle = ({ listId, isPublic, onToggle }) => {
       });
 
       if (response.ok) {
-        onToggle(listId, !isPublic); // Update local state
+        onToggle(listId, !isPublic); // Update the parent state
       } else {
         console.error("Failed to update list privacy.");
       }
@@ -27,17 +28,25 @@ const PublicToggle = ({ listId, isPublic, onToggle }) => {
   };
 
   return (
-    <button
-      onClick={handleToggle}
-      disabled={loading}
-      className={`px-4 py-2 rounded ${
-        isPublic
-          ? "bg-green-500 hover:bg-green-600"
-          : "bg-gray-500 hover:bg-gray-600"
-      } ${loading && "opacity-50 cursor-not-allowed"}`}
-    >
-      {loading ? "Updating..." : isPublic ? "Public" : "Private"}
-    </button>
+    <div className="flex items-center">
+      <Switch
+        checked={isPublic}
+        onChange={handleToggle}
+        disabled={loading}
+        className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
+          isPublic ? "bg-green-500" : "bg-gray-500"
+        } ${loading ? "cursor-not-allowed opacity-50" : "hover:bg-opacity-80"}`}
+      >
+        <span
+          className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
+            isPublic ? "translate-x-6" : "translate-x-1"
+          }`}
+        />
+      </Switch>
+      <span className="ml-3 text-sm font-medium text-gray-200">
+        {isPublic ? "Public" : "Private"}
+      </span>
+    </div>
   );
 };
 
