@@ -2,12 +2,10 @@
 
 import { XCircleIcon } from "@heroicons/react/24/outline";
 
-const DeleteButton = ({ listId }) => {
+const DeleteButton = ({ listId, deleteList }) => {
   const handleDelete = async () => {
     if (confirm("Are you sure you want to delete this list?")) {
       try {
-        console.log("Deleting list with ID:", listId);
-
         const response = await fetch(`/api/delete-list`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -16,7 +14,7 @@ const DeleteButton = ({ listId }) => {
 
         if (response.ok) {
           alert("List deleted successfully.");
-          location.reload(); // Refresh the page after deletion
+          deleteList(listId); // Directly update parent state
         } else {
           const error = await response.text();
           console.error("Failed to delete list:", error);
