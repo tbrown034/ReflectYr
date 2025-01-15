@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { Switch } from "@headlessui/react";
+import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 
 const HeaderColorToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Sync theme with localStorage and <html> element on mount
+  // Sync theme on mount
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     const systemPrefersDark = window.matchMedia(
@@ -18,7 +20,7 @@ const HeaderColorToggle = () => {
     document.documentElement.classList.toggle("dark", isDark);
   }, []);
 
-  // Toggle theme and save preference
+  // Toggle theme
   const toggleTheme = () => {
     const newTheme = isDarkMode ? "light" : "dark";
     setIsDarkMode(!isDarkMode);
@@ -27,12 +29,26 @@ const HeaderColorToggle = () => {
   };
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="p-2 font-semibold text-gray-900 transition rounded-lg bg-amber-400 hover:bg-amber-500"
-    >
-      {isDarkMode ? "Light Mode" : "Dark Mode"}
-    </button>
+    <div className="flex items-center gap-3">
+      {/* Sun Icon for Light Mode */}
+      <SunIcon className="w-6 h-6 text-yellow-700 dark:text-gray-400" />
+
+      {/* Toggle Switch */}
+      <Switch
+        checked={isDarkMode}
+        onChange={toggleTheme}
+        className="relative inline-flex items-center w-12 h-6 bg-gray-200 rounded-full dark:bg-gray-700"
+      >
+        <span
+          className={`inline-block h-4 w-4 transform rounded-full bg-white ${
+            isDarkMode ? "translate-x-6" : "translate-x-1"
+          }`}
+        />
+      </Switch>
+
+      {/* Moon Icon for Dark Mode */}
+      <MoonIcon className="w-6 h-6 text-gray-400 dark:text-blue-500" />
+    </div>
   );
 };
 
