@@ -30,10 +30,35 @@ export async function POST(req) {
 
     const userId = session.user.id;
 
+    // Generate a unique title for the list
+    let uniqueTitle = title;
+    let suffix = 1;
+
+    // Check if the title already exists for the user
+    while (true) {
+      const { rows: existingTitles } = await db.sql`
+        SELECT 1
+        FROM lists
+        WHERE user_id = ${userId} AND title = ${uniqueTitle}
+        LIMIT 1;
+      `;
+
+      if (existingTitles.length === 0) {
+        // If no duplicate exists, break out of the loop
+        break;
+      }
+
+      // If a duplicate exists, append a suffix like "(2)", "(3)", etc.
+      suffix++;
+      uniqueTitle = `${title} (${suffix})`;
+    }
+
+    console.log("Unique title generated:", uniqueTitle);
+
     // Insert the list into the `lists` table
     const result = await db.sql`
       INSERT INTO lists (user_id, title, is_public, created_at)
-      VALUES (${userId}, ${title}, false, NOW())
+      VALUES (${userId}, ${uniqueTitle}, false, NOW())
       RETURNING list_id;
     `;
 
@@ -53,7 +78,10 @@ export async function POST(req) {
     console.log("Movies inserted into list_items table.");
 
     // Return success response
-    return new Response(JSON.stringify({ success: true }), { status: 201 });
+    return new Response(
+      JSON.stringify({ success: true, listId: list.list_id }),
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error saving list:", error);
     return new Response("Internal Server Error", { status: 500 });

@@ -4,17 +4,22 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Title from "./Title";
 import ActionButtons from "./ActionButtons";
-import MoviesGrid from "./MoviesGrid"; // Updated import
+import MoviesGrid from "./MoviesGrid";
 import ShareModal from "./ShareModal";
 
-export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
+export default function BaseList({
+  temporaryListId,
+  initialTitle,
+  allowSave,
+  session,
+}) {
   const [movies, setMovies] = useState([]);
   const [listTitle, setListTitle] = useState(initialTitle);
   const [isEditing, setIsEditing] = useState(false);
-  const [isTitleEditing, setIsTitleEditing] = useState(false);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false); // Ensures boolean initialization
   const router = useRouter();
 
+  // Load movies from localStorage when the component mounts
   useEffect(() => {
     const storedList = localStorage.getItem(`temporaryList-${temporaryListId}`);
     if (storedList) {
@@ -26,10 +31,12 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
     }
   }, [temporaryListId]);
 
-  const handleAddMore = () => router.push("/movies");
+  const handleAddMore = () => {
+    router.push("/movies");
+  };
 
   const toggleShareModal = () => {
-    setIsShareModalOpen(!isShareModalOpen);
+    setIsShareModalOpen(!isShareModalOpen); // Toggle the modal state
   };
 
   const handleSaveList = async () => {
@@ -79,20 +86,25 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
     setMovies(updatedList);
   };
 
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+  };
+
   return (
     <div className="flex flex-col items-center gap-6 p-4">
       <div
         id="shareable-content"
         className="flex flex-col items-center gap-6 p-6 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800"
       >
+        {/* Title component */}
         <Title
           listTitle={listTitle}
-          isEditing={isTitleEditing}
+          isEditing={isEditing}
           onTitleChange={(e) => setListTitle(e.target.value)}
-          onSave={() => setIsTitleEditing(false)}
+          onSave={() => setIsEditing(false)}
         />
 
-        {/* MoviesGrid */}
+        {/* MoviesGrid component */}
         <MoviesGrid
           movies={movies}
           isEditing={isEditing}
@@ -101,22 +113,23 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
         />
       </div>
 
+      {/* ActionButtons component */}
       <ActionButtons
         isEditing={isEditing}
-        isTitleEditing={isTitleEditing}
         onAddMore={handleAddMore}
-        onEditList={() => setIsEditing(true)}
-        onFinalizeList={() => setIsEditing(false)}
-        onEditTitle={() => setIsTitleEditing(true)}
+        onEditToggle={handleEditToggle}
         onSaveList={handleSaveList}
         onDownloadImage={toggleShareModal}
+        showSaveList={!!session?.user} // Check if session.user exists
       />
 
+      {/* ShareModal component */}
       {isShareModalOpen && (
         <ShareModal
+          isOpen={isShareModalOpen} // Explicitly pass the boolean state
+          onClose={toggleShareModal}
           listTitle={listTitle}
           movies={movies}
-          onClose={toggleShareModal}
         />
       )}
     </div>

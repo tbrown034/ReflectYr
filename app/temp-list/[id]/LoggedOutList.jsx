@@ -5,7 +5,7 @@ export default function LoggedOutList({ temporaryListId }) {
     <BaseList
       temporaryListId={temporaryListId}
       initialTitle="My Top Movies of 2024"
-      allowSave={false} // No Save List functionality
+      allowSave={false} // No Save List functionality for logged-out users
     />
   );
 }

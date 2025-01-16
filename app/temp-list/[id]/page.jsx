@@ -24,6 +24,7 @@ export default async function TemporaryList({ params: paramsPromise }) {
         <LoggedInList
           temporaryListId={temporaryListId} // Pass the temporary list ID
           userName={session.user.name} // Pass the user's name for display
+          session={session} // Pass session object
         />
       </div>
     );
