@@ -61,7 +61,6 @@ export default function BaseList({
       });
 
       if (response.ok) {
-        alert("List saved successfully!");
       } else {
         const errorMessage = await response.text();
         alert(`Error: ${errorMessage}`);
