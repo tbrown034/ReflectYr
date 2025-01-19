@@ -12,6 +12,21 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        scrollLeft: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        scrollRight: {
+          // Reverse direction:
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        scrollLeft: "scrollLeft 60s linear infinite",
+        scrollRight: "scrollRight 60s linear infinite", // new keyframe
+      },
     },
   },
   plugins: [],

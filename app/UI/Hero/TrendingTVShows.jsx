@@ -1,3 +1,5 @@
+// app/UI/Hero/TrendingTVShows.jsx
+
 import { fetchTrendingShows } from "@/app/api/movies";
 import Image from "next/image";
 import React from "react";
@@ -7,8 +9,7 @@ export default async function TrendingTVShows() {
   let errorMessage = null;
 
   try {
-    console.log("Calling fetchTrendingShows...");
-    shows = await fetchTrendingShows(10); // Fetch only 10 US-based shows
+    shows = await fetchTrendingShows(10); // Fetch only 10 TV shows
     console.log("Shows fetched:", shows);
   } catch (error) {
     console.error("Error in TrendingTVShows component:", error.message);
@@ -24,13 +25,21 @@ export default async function TrendingTVShows() {
     );
   }
 
+  // Duplicate array for a seamless scroll
+  const doubledShows = [...shows, ...shows];
+
   return (
-    <div>
-      {/* Horizontal scroll container */}
-      <div className="relative overflow-x-auto">
-        <div className="flex gap-4">
-          {shows.map((show) => (
-            <div key={show.id} className="flex-shrink-0 w-40">
+    <div className="my-8">
+      <h2 className="mb-4 text-xl font-bold">Trending TV Shows</h2>
+
+      <div className="w-full overflow-hidden">
+        {/* Animate using scrollRight */}
+        <div className="flex w-[200%] animate-scrollRight gap-4 sm:gap-8">
+          {doubledShows.map((show, index) => (
+            <div
+              key={`${show.id}-${index}`}
+              className="flex-shrink-0 w-24 sm:w-40"
+            >
               <Image
                 src={
                   show.poster_path
