@@ -39,7 +39,7 @@ export default async function Hero() {
           <ArrowRightCircleIcon className="w-6 h-6 text-amber-400" />
         </Link>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         <TrendingMovies />
         <TrendingTVShows />
       </div>
