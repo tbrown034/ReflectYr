@@ -24,8 +24,8 @@ module.exports = {
         },
       },
       animation: {
-        scrollLeft: "scrollLeft 60s linear infinite",
-        scrollRight: "scrollRight 60s linear infinite", // new keyframe
+        scrollLeft: "scrollLeft 90s linear infinite",
+        scrollRight: "scrollRight 90s linear infinite", // new keyframe
       },
     },
   },

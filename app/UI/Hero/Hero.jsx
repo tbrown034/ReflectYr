@@ -12,7 +12,7 @@ export default async function Hero() {
   const session = await auth();
 
   return (
-    <div className="flex flex-col gap-4 p-6">
+    <div className="flex flex-col gap-6 p-6">
       {/* Hero Text */}
       <HeroText />
 
@@ -39,7 +39,7 @@ export default async function Hero() {
           <ArrowRightCircleIcon className="w-6 h-6 text-amber-400" />
         </Link>
       </div>
-      <div>
+      <div className="flex flex-col gap-2">
         <TrendingMovies />
         <TrendingTVShows />
       </div>

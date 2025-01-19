@@ -1,48 +1,52 @@
 import React from "react";
 import Link from "next/link";
-import { FilmIcon, TvIcon, MusicalNoteIcon } from "@heroicons/react/24/outline";
+import { MdMovie, MdTv } from "react-icons/md";
 
 const HeroBubbles = () => {
   const bubbles = [
     {
       title: "Movies",
       description:
-        "Build lists of your favorite movies from the year and share them with others.",
-      bgColor: "bg-gray-600",
-      icon: <FilmIcon className="w-8 h-8 text-amber-400" />,
+        "Dive into the best films of the year. Organize, rank, and share your favorites.",
+      bgColor: "bg-gray-800",
+      icon: <MdMovie className="w-12 h-12 text-amber-500" />,
       route: "/movies",
     },
     {
       title: "TV Shows",
-      description: "Keep track of the shows that kept you hooked this year.",
-      bgColor: "bg-gray-700",
-      icon: <TvIcon className="w-8 h-8 text-amber-400" />,
+      description:
+        "Keep track of the TV series you loved this year. Build and share custom lists.",
+      bgColor: "bg-gray-800",
+      icon: <MdTv className="w-12 h-12 text-amber-500" />,
       route: "/tv",
     },
-    // {
-    //   title: "Music",
-    //   description: "Reflect on the tracks and albums that defined your year.",
-    //   bgColor: "bg-gray-800",
-    //   icon: <MusicalNoteIcon className="w-8 h-8 text-amber-400" />,
-    //   route: "/music",
-    // },
   ];
 
   return (
-    <div className="flex flex-col w-full gap-6 sm:flex-row sm:justify-start">
+    <div className="flex flex-col w-full gap-6 sm:flex-row sm:gap-8">
       {bubbles.map((bubble, index) => (
         <Link
           key={index}
           href={bubble.route}
-          className={`flex flex-col justify-start p-6 ${bubble.bgColor} rounded-lg shadow-md hover:shadow-lg transition hover:scale-105 group`}
+          className={`flex flex-col justify-start items-start p-6 rounded-lg shadow-lg transition-transform transform ${bubble.bgColor} hover:shadow-amber-400 hover:-translate-y-1 group`}
         >
-          <div className="flex items-center gap-3">
-            {bubble.icon}
-            <h3 className="text-xl font-bold text-gray-100 transition border-b-2 border-transparent group-hover:text-amber-400 group-hover:border-amber-400">
-              {bubble.title}
-            </h3>
+          {/* Icon */}
+          <div className="mb-4">{bubble.icon}</div>
+
+          {/* Title */}
+          <h3 className="text-xl font-bold text-white transition group-hover:text-amber-500">
+            {bubble.title}
+          </h3>
+
+          {/* Description */}
+          <p className="mt-2 text-sm leading-relaxed text-gray-300">
+            {bubble.description}
+          </p>
+
+          {/* Action */}
+          <div className="mt-4 text-sm font-semibold text-amber-500 group-hover:underline">
+            Explore {bubble.title} →
           </div>
-          <p className="mt-2 text-sm text-gray-200">{bubble.description}</p>
         </Link>
       ))}
     </div>
