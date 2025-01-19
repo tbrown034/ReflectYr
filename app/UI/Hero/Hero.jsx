@@ -5,6 +5,8 @@ import Link from "next/link";
 import HeroBubbles from "./HeroBubbles";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 import SignIn from "../../UI/components/SignIn";
+import TrendingTVShows from "./TrendingTVShows";
+import TrendingMovies from "./TrendingMovies";
 
 export default async function Hero() {
   const session = await auth();
@@ -37,6 +39,8 @@ export default async function Hero() {
           <ArrowRightCircleIcon className="w-6 h-6 text-amber-400" />
         </Link>
       </div>
+      <TrendingTVShows />
+      <TrendingMovies />
 
       {/* Hero Bubbles */}
       <HeroBubbles />
