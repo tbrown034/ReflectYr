@@ -20,7 +20,7 @@ const HeroText = () => {
 
       {/* Subheading */}
       <p
-        className={`mx-auto text-lg text-gray-800 dark:text-gray-200 md:text-xl md:mx-0 ${inter.className}`}
+        className={`mx-auto text-xl text-gray-800 dark:text-gray-200 md:text-xl md:mx-0 ${inter.className}`}
       >
         Celebrate your year. Curate your favorite movies from the past 12
         months. Build your list and share it with friends—or just reflect for

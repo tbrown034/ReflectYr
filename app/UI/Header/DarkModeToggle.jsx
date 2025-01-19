@@ -26,24 +26,26 @@ const DarkModeToggle = () => {
   return (
     <div className="flex items-center gap-2">
       <SunIcon
-        className={`w-6 h-6 ${
+        className={`w-6 h-6 transition-colors duration-300 ${
           isDarkMode ? "text-gray-400" : "text-yellow-500"
         }`}
       />
       <button
         onClick={toggleTheme}
-        className={`flex items-center justify-center w-10 h-5 rounded-full ${
+        className={`relative flex items-center justify-center w-12 h-6 rounded-full transition-colors duration-300 ${
           isDarkMode ? "bg-gray-600" : "bg-gray-200"
         }`}
       >
         <span
-          className={`w-4 h-4 rounded-full bg-white transform transition-transform ${
-            isDarkMode ? "translate-x-5" : "translate-x-0"
+          className={`absolute left-0 w-6 h-6 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
+            isDarkMode ? "translate-x-6" : "translate-x-0"
           }`}
         />
       </button>
       <MoonIcon
-        className={`w-6 h-6 ${isDarkMode ? "text-blue-500" : "text-gray-400"}`}
+        className={`w-6 h-6 transition-colors duration-300 ${
+          isDarkMode ? "text-blue-500" : "text-gray-400"
+        }`}
       />
     </div>
   );

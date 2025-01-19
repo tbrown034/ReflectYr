@@ -1,26 +1,43 @@
-import HeaderNavBar from "./HeaderNavBar";
-import HeaderBrand from "./HeaderBrand";
-import HeaderMobileMenu from "./HeaderMobileMenu";
-import HeaderSignInAndOut from "./HeaderSignInAndOut";
+import Logo from "./Logo";
+import NavLinks from "./NavLinks";
 import DarkModeToggle from "./DarkModeToggle";
+import SignIn from "../components/SignIn";
+import Dropdown from "./Dropdown"; // Import the new Dropdown component
+import { auth } from "@/auth";
+import Link from "next/link";
 
-const Header = () => {
+export default async function Header() {
+  const session = await auth();
+
   return (
-    <header className="flex items-center justify-between p-4 border-b border-gray-900 dark:border-gray-200 ">
-      <HeaderBrand />
-      <nav className="hidden md:flex md:gap-6">
-        <HeaderNavBar />
-      </nav>
-      <div className="flex items-center gap-4">
-        <div className="hidden gap-4 sm:flex">
-          <HeaderSignInAndOut />
-        </div>
-        <DarkModeToggle />
+    <header className="flex items-center justify-between p-4 border-b border-gray-900 dark:border-gray-200">
+      {/* Logo */}
+      <Logo />
 
-        <HeaderMobileMenu className="md:hidden" />
+      {/* Desktop Navigation */}
+      <nav className="hidden sm:flex">
+        <NavLinks />
+      </nav>
+
+      {/* Desktop Actions */}
+      <div className="items-center hidden gap-4 sm:flex">
+        <DarkModeToggle />
+        {session?.user ? (
+          <Link
+            href="/profile"
+            className="flex items-center gap-3 p-2 font-semibold text-gray-900 transition rounded-lg bg-amber-400 hover:bg-amber-500"
+          >
+            Profile
+          </Link>
+        ) : (
+          <SignIn className="flex items-center gap-3 p-2 font-semibold text-gray-900 transition rounded-lg bg-amber-400 hover:bg-amber-500" />
+        )}
+      </div>
+
+      {/* Mobile Dropdown */}
+      <div className="sm:hidden">
+        <Dropdown session={session} />
       </div>
     </header>
   );
-};
-
-export default Header;
+}
