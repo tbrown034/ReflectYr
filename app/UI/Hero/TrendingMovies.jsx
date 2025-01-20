@@ -56,7 +56,7 @@ export default async function TrendingMovies() {
               d="M12 4v16m8-8H4"
             />
           </svg>
-          Make Your List!
+          Create List
         </Link>
       </div>
 

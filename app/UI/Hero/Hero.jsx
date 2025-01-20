@@ -12,34 +12,36 @@ export default async function Hero() {
   const session = await auth();
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="flex flex-col gap-12 p-4">
       {/* Hero Text */}
-      <HeroText />
-
-      {/* Call-to-Actions */}
-      <div className="flex justify-center w-full gap-4 sm:justify-start">
-        {/* Conditional Rendering for Profile or SignIn */}
-        {session ? (
-          <Link
-            href="/profile"
-            className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-900 transition rounded-lg bg-amber-400 hover:bg-amber-500"
-          >
-            Profile
-          </Link>
-        ) : (
-          <SignIn className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-900 transition border-4 rounded-lg shadow-xl hover:scale-105 border-amber-400 bg-amber-400 hover:bg-amber-500" />
-        )}
-
-        {/* Get Started Button */}
-        <Link
-          href="/get-started"
-          className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-200 transition bg-gray-700 border-2 border-transparent rounded-lg shadow-lg hover:bg-gray-600 hover:scale-105"
-        >
-          <span>Get Started</span>
-          <ArrowRightCircleIcon className="w-6 h-6 text-amber-400" />
-        </Link>
-      </div>
       <div className="flex flex-col gap-4">
+        <HeroText />
+
+        {/* Call-to-Actions */}
+        <div className="flex justify-center w-full gap-4 sm:justify-start">
+          {/* Conditional Rendering for Profile or SignIn */}
+          {session ? (
+            <Link
+              href="/profile"
+              className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-900 transition rounded-lg bg-amber-400 hover:bg-amber-500"
+            >
+              Profile
+            </Link>
+          ) : (
+            <SignIn className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-900 transition border-4 rounded-lg shadow-xl hover:scale-105 border-amber-400 bg-amber-400 hover:bg-amber-500" />
+          )}
+
+          {/* Get Started Button */}
+          <Link
+            href="/get-started"
+            className="flex items-center gap-3 px-6 py-3 text-lg font-semibold text-gray-200 transition bg-gray-700 border-2 border-transparent rounded-lg shadow-lg hover:bg-gray-600 hover:scale-105"
+          >
+            <span>Get Started</span>
+            <ArrowRightCircleIcon className="w-6 h-6 text-amber-400" />
+          </Link>
+        </div>
+      </div>
+      <div className="flex flex-col gap-12">
         <TrendingMovies />
         <TrendingTVShows />
       </div>
