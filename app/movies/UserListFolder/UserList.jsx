@@ -44,7 +44,7 @@ export default function UserList({ userList, removeMovie, setUserList }) {
   };
 
   return (
-    <section className="p-4 bg-gray-100 rounded-lg shadow-lg dark:bg-gray-900">
+    <section>
       <h1 className="text-lg font-bold text-amber-500 dark:text-amber-400">
         Your List
       </h1>
@@ -59,7 +59,7 @@ export default function UserList({ userList, removeMovie, setUserList }) {
         {moviesToDisplay.map((movie, index) => (
           <li
             key={index}
-            className="transition-all duration-200 bg-gray-200 rounded-lg shadow-md hover:shadow-lg hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700"
+            className="transition-all duration-200 bg-gray-100 rounded-lg shadow-md hover:bg-white hover:shadow-md dark:bg-gray-700 dark:hover:bg-gray-60"
           >
             <div className="p-4">
               {/* Left Section: Number, Poster, Title */}

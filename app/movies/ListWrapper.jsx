@@ -30,13 +30,19 @@ export default function ListWrapper({ movies, query, currentPage }) {
   };
 
   return (
-    <div className="flex flex-col-reverse gap-6 md:flex-row">
-      {/* Search Results Section */}
-      <div className="flex-1">
-        <div className="flex flex-col gap-4 p-4 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-            Add Movies 🎬
-          </h2>
+    <div className="flex justify-between gap-6 md:flex-row">
+      <div className="flex flex-col gap-6 md:flex-row">
+        {/* Movies Section */}
+        <div className="flex flex-col gap-4 p-6 bg-gray-200 rounded-lg shadow-md dark:bg-gray-800 md:basis-2/3">
+          <h1 className="text-2xl font-extrabold text-gray-900 dark:text-gray-100">
+            <span className="text-amber-500 dark:text-amber-400">
+              Add Movies to Your List
+            </span>
+          </h1>
+          <p className="text-sm text-gray-700 dark:text-gray-400">
+            Explore the most popular movies of the year, or search for your
+            favorites to start building your personalized list.
+          </p>
           <SearchBar query={query} />
           {query ? (
             <SearchList
@@ -53,15 +59,15 @@ export default function ListWrapper({ movies, query, currentPage }) {
           )}
           <PaginationControls currentPage={currentPage} query={query} />
         </div>
-      </div>
 
-      {/* User List Section for Larger Screens */}
-      <div className="hidden w-full max-w-sm p-4 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800 md:block">
-        <UserList
-          userList={userList}
-          removeMovie={removeMovie}
-          setUserList={setUserList}
-        />
+        {/* User List Section */}
+        <div className="hidden p-6 bg-gray-200 rounded-lg shadow-md dark:bg-gray-800 md:block ">
+          <UserList
+            userList={userList}
+            removeMovie={removeMovie}
+            setUserList={setUserList}
+          />
+        </div>
       </div>
 
       {/* Mobile Drawer Section */}
@@ -85,7 +91,7 @@ export default function ListWrapper({ movies, query, currentPage }) {
           {drawerOpen && (
             <div className="p-4 overflow-y-auto max-h-[65vh]">
               <h2 className="mb-4 text-xl font-bold text-center text-gray-100">
-                Your List
+                Your Temporary List
               </h2>
               <UserList
                 userList={userList}
