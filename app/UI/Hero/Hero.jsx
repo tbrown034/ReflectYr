@@ -14,11 +14,11 @@ export default async function Hero() {
   return (
     <div className="flex flex-col gap-12 p-4">
       {/* Hero Text */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         <HeroText />
 
         {/* Call-to-Actions */}
-        <div className="flex justify-center w-full gap-4 sm:justify-start">
+        <div className="flex gap-6">
           {/* Conditional Rendering for Profile or SignIn */}
           {session ? (
             <Link

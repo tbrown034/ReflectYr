@@ -2,7 +2,7 @@ import { rubik, inter, raleway } from "../../fonts/fonts.js";
 
 const HeroText = () => {
   return (
-    <div className="flex flex-col items-center gap-6 text-center md:items-start md:text-left">
+    <div className="flex flex-col items-center gap-2 text-center md:items-start md:text-left">
       {/* Main Heading */}
       <h1
         className={`text-5xl font-extrabold leading-tight md:text-6xl ${raleway.className}`}
