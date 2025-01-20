@@ -93,7 +93,7 @@ export default function BaseList({
     <div className="flex flex-col items-center gap-6 p-4">
       <div
         id="shareable-content"
-        className="flex flex-col items-center gap-6 p-6 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800"
+        className="flex flex-col items-center gap-6 p-6 bg-gray-200 rounded-lg shadow-md dark:bg-gray-800"
       >
         {/* Title component */}
         <Title

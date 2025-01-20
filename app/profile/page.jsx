@@ -2,22 +2,29 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { fetchMovieDetails } from "@/app/api/movies";
 import UserLists from "./UserLists";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { UserCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import SignOut from "../UI/components/SignOut";
 import Link from "next/link";
 
 const ProfilePage = async () => {
   const session = await auth();
 
+  // If user is not signed in
   if (!session?.user) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-8 text-gray-900 bg-gray-300 dark:bg-gray-900 dark:text-gray-200">
+      <div className="flex flex-col items-center justify-center min-h-screen p-8 text-gray-900 dark:bg-gray-900 dark:text-gray-200">
         <h1 className="mb-4 text-4xl font-extrabold text-amber-500">
           Welcome to ReflectYr
         </h1>
         <p className="mb-6 text-lg text-gray-800 dark:text-gray-300">
           Please sign in to access your profile or continue as a guest.
         </p>
+        <Link
+          href="/"
+          className="px-6 py-3 text-sm font-semibold text-white rounded-lg bg-amber-500 hover:bg-amber-600"
+        >
+          Go to Home
+        </Link>
       </div>
     );
   }
@@ -41,7 +48,11 @@ const ProfilePage = async () => {
       const itemsWithTitles = await Promise.all(
         listItems.rows.map(async (item) => {
           const movie = await fetchMovieDetails(item.tmdb_id);
-          return { ...item, title: movie.title };
+          return {
+            ...item,
+            title: movie.title,
+            poster_path: movie.poster_path,
+          };
         })
       );
 
@@ -50,32 +61,49 @@ const ProfilePage = async () => {
   );
 
   return (
-    <div className="flex flex-col items-center min-h-screen p-8 text-gray-900 bg-gray-300 dark:bg-gray-900 dark:text-gray-200">
-      <div className="w-full max-w-4xl p-6 text-center">
+    <div className="flex flex-col items-center min-h-screen p-8 text-gray-900 dark:bg-gray-900 dark:text-gray-200">
+      {/* User Header */}
+      <div className="w-full max-w-4xl mb-8 text-center">
         <UserCircleIcon className="w-20 h-20 mx-auto text-amber-400" />
-        <h1 className="mt-4 text-4xl font-extrabold text-amber-500">
-          Welcome, {user.name}!
+        <h1 className="mt-4 text-3xl font-extrabold text-gray-900 dark:text-gray-100">
+          Welcome, <span className="text-amber-500">{user.name}</span>!
         </h1>
-        <p className="mt-2 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
           Account created: {new Date(user.created_at).toLocaleDateString()}
         </p>
       </div>
 
-      <div className="w-full max-w-4xl p-6">
+      {/* Your Lists Section */}
+      <div className="w-full max-w-4xl">
         <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-gray-200">
           Your Lists
         </h2>
-        <UserLists initialLists={listsWithItems} />
+
+        {/* Render User Lists */}
+        {listsWithItems.length > 0 ? (
+          <UserLists initialLists={listsWithItems} />
+        ) : (
+          <div className="p-6 text-center bg-gray-200 rounded-lg dark:bg-gray-800">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              You haven’t created any lists yet. Start by creating a new one!
+            </p>
+          </div>
+        )}
       </div>
 
-      <div className="mt-6 space-y-4">
+      {/* Actions */}
+      <div className="flex flex-col w-full max-w-4xl gap-4 mt-6 md:flex-row">
+        {/* Create New List Button */}
         <Link
           href="/movies"
-          className="w-full px-4 py-2 font-semibold text-center text-gray-900 bg-green-500 rounded hover:bg-green-600"
+          className="flex items-center justify-center w-full gap-2 px-6 py-3 text-lg font-semibold text-white rounded-lg bg-amber-500 hover:bg-amber-600"
         >
+          <PlusCircleIcon className="w-5 h-5" />
           Create New List
         </Link>
-        <div className="w-full px-4 py-2 font-semibold text-center text-gray-900 bg-red-500 rounded hover:bg-red-600">
+
+        {/* Sign Out Button */}
+        <div className="flex items-center justify-center w-full gap-2 px-6 py-3 text-lg font-semibold text-white bg-gray-700 rounded-lg hover:bg-gray-800">
           <SignOut />
         </div>
       </div>

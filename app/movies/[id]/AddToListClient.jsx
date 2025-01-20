@@ -5,11 +5,8 @@ import { useRouter } from "next/navigation";
 
 export default function AddToListClient({ movie }) {
   const router = useRouter();
-
-  // State to track if the movie is already in the list
   const [isInUserList, setIsInUserList] = useState(false);
 
-  // Check if the movie is already in the user list on mount
   useEffect(() => {
     const userList = JSON.parse(localStorage.getItem("userList") || "[]");
     setIsInUserList(userList.some((m) => m.id === movie.id));
@@ -18,13 +15,8 @@ export default function AddToListClient({ movie }) {
   const handleAddToList = () => {
     if (isInUserList) return;
 
-    // Retrieve the current list from localStorage
     const currentList = JSON.parse(localStorage.getItem("userList") || "[]");
-
-    // Add the movie to the list and save to localStorage
     localStorage.setItem("userList", JSON.stringify([...currentList, movie]));
-
-    // Navigate back to /movies
     router.push("/movies");
   };
 
@@ -32,13 +24,13 @@ export default function AddToListClient({ movie }) {
     <button
       onClick={handleAddToList}
       disabled={isInUserList}
-      className={`px-4 py-2 text-white rounded ${
+      className={`w-full px-6 py-3 text-lg font-medium rounded-lg transition ${
         isInUserList
-          ? "bg-gray-400 cursor-not-allowed"
-          : "bg-blue-600 hover:bg-blue-800"
+          ? "bg-gray-400 text-gray-100 cursor-not-allowed"
+          : "bg-blue-600 text-white hover:bg-blue-800"
       }`}
     >
-      {isInUserList ? "Added" : "Add to List"}
+      {isInUserList ? "Already in List" : "Add to List"}
     </button>
   );
 }

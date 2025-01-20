@@ -1,7 +1,5 @@
 "use client";
 
-import { XCircleIcon } from "@heroicons/react/24/outline";
-
 const DeleteButton = ({ listId, deleteList }) => {
   const handleDelete = async () => {
     if (confirm("Are you sure you want to delete this list?")) {
@@ -14,7 +12,7 @@ const DeleteButton = ({ listId, deleteList }) => {
 
         if (response.ok) {
           alert("List deleted successfully.");
-          deleteList(listId); // Directly update parent state
+          deleteList(listId);
         } else {
           const error = await response.text();
           console.error("Failed to delete list:", error);
@@ -30,10 +28,9 @@ const DeleteButton = ({ listId, deleteList }) => {
   return (
     <button
       onClick={handleDelete}
-      className="absolute text-red-400 top-2 right-2 hover:text-red-600"
-      aria-label="Delete"
+      className="px-4 py-2 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600"
     >
-      <XCircleIcon className="w-6 h-6" />
+      Delete List
     </button>
   );
 };
