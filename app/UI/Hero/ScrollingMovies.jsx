@@ -1,24 +1,25 @@
-import { fetchTrendingMovies } from "@/app/api/movies";
+import { fetchDiscoverMovies } from "@/app/api/movies";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 
-export default async function TrendingMovies() {
+export default async function ScrollingMovies() {
   let movies = [];
   let errorMessage = null;
 
   try {
-    movies = await fetchTrendingMovies(20);
+    // Fetch the most popular movies for 2024 (default year)
+    movies = await fetchDiscoverMovies(1); // Page 1 by default
     console.log("Movies fetched:", movies);
   } catch (error) {
-    console.error("Error in TrendingMovies component:", error.message);
+    console.error("Error in PopularMovies component:", error.message);
     errorMessage = error.message;
   }
 
   if (errorMessage) {
     return (
       <div className="p-4 text-red-600">
-        <h2 className="mb-4 text-sm font-bold">Trending Movies</h2>
+        <h2 className="mb-4 text-sm font-bold">Popular Movies</h2>
         <p>{errorMessage}</p>
       </div>
     );
@@ -30,10 +31,10 @@ export default async function TrendingMovies() {
   return (
     <div className="">
       <div className="flex items-center justify-between gap-8 mb-4">
-        {/* Single badge for "Trending Movies" */}
+        {/* Single badge for "Popular Movies" */}
         <h2 className="text-xl font-bold">
           <span className="inline-block px-3 py-1 text-sm font-semibold text-black rounded-full bg-amber-500">
-            Movies
+            Popular Movies
           </span>
         </h2>
 

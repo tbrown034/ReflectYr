@@ -5,9 +5,9 @@ import Link from "next/link";
 import HeroBubbles from "./HeroBubbles";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 import SignIn from "../../UI/components/SignIn";
-import TrendingTVShows from "./TrendingTVShows";
-import TrendingMovies from "./TrendingMovies";
-
+import ScrollingMovies from "./ScrollingMovies";
+import ScrollingShows from "./ScrollingShows";
+import YearHolder from "./YearHolder";
 export default async function Hero() {
   const session = await auth();
 
@@ -41,9 +41,13 @@ export default async function Hero() {
           </Link>
         </div>
       </div>
+
       <div className="flex flex-col gap-12">
-        <TrendingMovies />
-        <TrendingTVShows />
+        <ScrollingMovies />
+        <ScrollingShows />
+      </div>
+      <div className="flex items-center justify-center">
+        <YearHolder />
       </div>
       {/* Hero Bubbles */}
       <HeroBubbles />
