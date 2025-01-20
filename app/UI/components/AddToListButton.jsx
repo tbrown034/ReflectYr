@@ -2,7 +2,8 @@
 
 export default function AddToListButton({ onAdd, disabled }) {
   const handleClick = (e) => {
-    e.stopPropagation(); // Prevents the click from affecting the parent Link
+    e.preventDefault(); // Prevent default navigation behavior
+    e.stopPropagation(); // Prevent event bubbling to the parent Link
     if (!disabled) {
       onAdd();
     }
