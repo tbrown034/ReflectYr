@@ -1,96 +1,63 @@
-import { useState } from "react";
+"use client";
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
+import { useState } from "react";
 
-export default function Title({ listTitle, isEditing, onTitleChange, onSave }) {
-  const [isTitleValid, setIsTitleValid] = useState(true); // Validation state
-  const [validationMessage, setValidationMessage] = useState(""); // Error message
-  const [suggestedTitle, setSuggestedTitle] = useState(""); // Suggested unique title
+export default function SearchBar() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  // Debounced function to check title uniqueness
-  const checkTitleUniqueness = useDebouncedCallback(async (title) => {
-    try {
-      const response = await fetch("/api/check-title", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title }),
-      });
+  // Extract the existing query from the URL if present
+  const [term, setTerm] = useState(searchParams.get("query") || "");
 
-      const { isUnique } = await response.json();
+  // Debounced function to handle search
+  const handleSearch = useDebouncedCallback((value) => {
+    const params = new URLSearchParams(searchParams);
 
-      if (!isUnique) {
-        setIsTitleValid(false);
-        setValidationMessage(
-          "This title already exists. Please choose a different one."
-        );
-        setSuggestedTitle(`${title} (2)`); // Suggest a unique title
-      } else {
-        setIsTitleValid(true);
-        setValidationMessage("");
-        setSuggestedTitle(""); // Clear suggestion
-      }
-    } catch (error) {
-      console.error("Error checking title uniqueness:", error);
-      setIsTitleValid(false);
-      setValidationMessage("Something went wrong. Please try again.");
+    if (value) {
+      params.set("query", value); // Update the query parameter
+    } else {
+      params.delete("query"); // Remove query if empty
     }
-  }, 500); // 500ms debounce
 
-  const handleTitleChange = (e) => {
-    const title = e.target.value;
-    onTitleChange(e); // Update the parent component's state
-    checkTitleUniqueness(title); // Trigger debounced validation
+    params.set("page", "1"); // Reset pagination when searching
+    router.replace(`${pathname}?${params.toString()}`); // Update the URL
+  }, 300);
+
+  // Handle input change
+  const handleChange = (value) => {
+    setTerm(value); // Update local state for input value
+    handleSearch(value); // Trigger debounced search
   };
 
-  const handleSave = () => {
-    if (!isTitleValid) {
-      alert(
-        "The title you entered already exists. Please choose a unique title."
-      );
-      return;
-    }
-    onSave(); // Call the save function from the parent
+  // Clear the search input
+  const clearSearch = () => {
+    setTerm(""); // Reset local state
+    handleSearch(""); // Update the URL by removing the query
   };
-
-  if (isEditing) {
-    return (
-      <div>
-        <input
-          type="text"
-          value={listTitle}
-          onChange={handleTitleChange}
-          className={`w-full p-2 text-sm font-bold text-center text-black border-2 rounded-lg shadow-sm focus:outline-none ${
-            isTitleValid ? "focus:border-amber-500" : "border-red-500"
-          }`}
-        />
-        {!isTitleValid && (
-          <p className="mt-1 text-sm text-red-500">
-            {validationMessage}
-            {suggestedTitle && (
-              <>
-                <br />
-                Suggested: <span className="font-bold">{suggestedTitle}</span>
-              </>
-            )}
-          </p>
-        )}
-        <button
-          onClick={handleSave}
-          disabled={!isTitleValid} // Disable save if title is invalid
-          className={`w-full px-4 py-2 mt-2 text-sm font-semibold transition rounded-lg ${
-            isTitleValid
-              ? "text-gray-900 bg-amber-400 hover:bg-amber-500"
-              : "text-gray-400 bg-gray-200 cursor-not-allowed"
-          }`}
-        >
-          Save Title
-        </button>
-      </div>
-    );
-  }
 
   return (
-    <h1 className="text-2xl font-extrabold text-center md:text-4xl text-amber-600 dark:text-amber-400 drop-shadow-md">
-      {listTitle}
-    </h1>
+    <div className="relative w-full">
+      {/* Search Input */}
+      <input
+        type="text"
+        placeholder="Search movies..."
+        value={term}
+        onChange={(e) => handleChange(e.target.value)}
+        className="w-full px-4 py-2 text-gray-900 placeholder-gray-700 bg-gray-200 border-2 border-gray-900 rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+      />
+
+      {/* Clear Button */}
+      {term && (
+        <button
+          onClick={clearSearch}
+          className="absolute inset-y-0 flex items-center px-2 text-sm font-semibold text-gray-600 bg-gray-200 rounded-full right-2 hover:text-gray-900 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-gray-100 focus:outline-none"
+        >
+          Clear
+        </button>
+      )}
+    </div>
   );
 }

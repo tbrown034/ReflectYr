@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import SearchBar from "@/app/UI/components/SearchBar";
 import PaginationControls from "@/app/UI/components/PaginationControls";
 import UserList from "./UserListFolder/UserList";
-import FullList from "./MoviesList/FullList";
-import SearchList from "./MoviesList/SearchList";
+import ItemList from "./MoviesList/ItemList"; // Replaces FullList and SearchList
 
-export default function ListWrapper({ movies, query, currentPage }) {
+export default function ListWrapper({ movies, currentPage }) {
   const [userList, setUserList] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -43,21 +41,12 @@ export default function ListWrapper({ movies, query, currentPage }) {
             Explore the most popular movies of the year, or search for your
             favorites to start building your personalized list.
           </p>
-          <SearchBar query={query} />
-          {query ? (
-            <SearchList
-              movies={movies}
-              userList={userList}
-              addToUserList={addToUserList}
-            />
-          ) : (
-            <FullList
-              movies={movies}
-              userList={userList}
-              addToUserList={addToUserList}
-            />
-          )}
-          <PaginationControls currentPage={currentPage} query={query} />
+          <ItemList
+            movies={movies}
+            userList={userList}
+            addToUserList={addToUserList}
+          />
+          <PaginationControls currentPage={currentPage} />
         </div>
 
         {/* User List Section */}
@@ -72,7 +61,6 @@ export default function ListWrapper({ movies, query, currentPage }) {
 
       {/* Mobile Drawer Section */}
       <div className="fixed inset-x-0 bottom-0 md:hidden">
-        {/* Toggle Button */}
         <button
           onClick={() => setDrawerOpen(!drawerOpen)}
           className="w-full px-6 py-4 text-lg font-bold text-center text-gray-100 shadow-lg bg-amber-500 rounded-t-xl hover:bg-amber-600"
@@ -82,7 +70,6 @@ export default function ListWrapper({ movies, query, currentPage }) {
             : `View Your List 📋 (${userList.length}/10)`}
         </button>
 
-        {/* Drawer Content */}
         <div
           className={`transition-transform duration-300 ease-in-out bg-gray-900 rounded-t-xl shadow-xl dark:bg-gray-800 ${
             drawerOpen ? "max-h-[75vh]" : "max-h-0"
