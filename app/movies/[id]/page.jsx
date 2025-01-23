@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { fetchMovieDetails } from "@/app/api/movies";
 import Link from "next/link";
-import AddToListClient from "./AddToListClient";
+import AddToListButton from "./AddToListButton";
 
 export default async function MovieDetailsPage({ params: paramsPromise }) {
   const params = await paramsPromise;
@@ -70,7 +70,7 @@ export default async function MovieDetailsPage({ params: paramsPromise }) {
       </div>
 
       {/* Add to List */}
-      <AddToListClient movie={movie} />
+      <AddToListButton movie={movie} />
 
       {/* Navigation Buttons */}
       <div className="flex justify-center gap-4 mt-6">

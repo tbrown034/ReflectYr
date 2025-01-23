@@ -4,8 +4,7 @@ import {
   UserCircleIcon,
   ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
-import SignIn from "@/app/UI/components/SignIn"; // Reuse your existing SignIn component
-
+import SignIn from "@/app/UI/components/SignIn";
 export default async function GetStarted() {
   const session = await auth();
 
@@ -41,7 +40,6 @@ export default async function GetStarted() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4 text-gray-900 bg-gray-300 dark:bg-gray-900 dark:text-gray-200">
-      {/* Hero Section */}
       <div className="max-w-4xl text-center">
         <h1 className="text-4xl font-extrabold sm:text-5xl text-amber-500 dark:text-amber-300">
           Get Started with ReflectYr
@@ -61,8 +59,6 @@ export default async function GetStarted() {
           )}
         </p>
       </div>
-
-      {/* Options Section */}
       <div className="grid w-full max-w-2xl gap-6 mt-12 sm:grid-cols-2">
         {options.map((option, index) => {
           const isSignIn = option.title === "Sign In" && !session;
@@ -100,8 +96,6 @@ export default async function GetStarted() {
           );
         })}
       </div>
-
-      {/* Footer */}
       <div className="mt-12 text-xs text-gray-600 dark:text-gray-400">
         By signing in, you agree to our{" "}
         <Link

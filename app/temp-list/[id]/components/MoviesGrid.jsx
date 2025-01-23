@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import UserListControls from "@/app/movies/UserListFolder/UserListControls";
+import UserListControls from "@/app/UI/components/UserListControls";
 
 export default function MoviesGrid({
   movies,

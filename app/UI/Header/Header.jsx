@@ -1,7 +1,7 @@
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
 import DarkModeToggle from "./DarkModeToggle";
-import SignIn from "../components/SignIn";
+import SignIn from "@/app/UI/components/buttons/SignIn";
 import Dropdown from "./Dropdown"; // Import the new Dropdown component
 import { auth } from "@/auth";
 import Link from "next/link";

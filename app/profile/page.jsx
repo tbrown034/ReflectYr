@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { fetchMovieDetails } from "@/app/api/movies";
 import UserLists from "./UserLists";
 import { UserCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
-import SignOut from "../UI/components/SignOut";
+import SignOut from "../UI/components/buttons/SignOut";
 import Link from "next/link";
 
 const ProfilePage = async () => {

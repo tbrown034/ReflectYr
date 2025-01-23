@@ -4,7 +4,7 @@ import HeroText from "./HeroText";
 import Link from "next/link";
 import HeroBubbles from "./HeroBubbles";
 import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
-import SignIn from "../../UI/components/SignIn";
+import SignIn from "@/app/UI/components/buttons/SignIn";
 import ScrollingMovies from "./ScrollingMovies";
 import ScrollingShows from "./ScrollingShows";
 import YearHolder from "./YearHolder";
