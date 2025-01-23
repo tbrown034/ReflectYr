@@ -4,7 +4,7 @@ import {
   UserCircleIcon,
   ArrowRightCircleIcon,
 } from "@heroicons/react/24/outline";
-import SignIn from "@/app/UI/components/SignIn";
+import SignIn from "@/app/UI/components/buttons/SignIn";
 export default async function GetStarted() {
   const session = await auth();
 
