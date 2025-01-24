@@ -11,7 +11,6 @@ const DeleteButton = ({ listId, deleteList }) => {
         });
 
         if (response.ok) {
-          alert("List deleted successfully.");
           deleteList(listId);
         } else {
           const error = await response.text();

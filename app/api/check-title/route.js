@@ -14,22 +14,33 @@ export async function POST(req) {
     const { title } = await req.json();
     const userId = session.user.id;
 
-    // Check if the title exists for the user
-    const { rows: existingTitles } = await db.sql`
-      SELECT 1
+    // Query for existing titles with the same base pattern
+    const { rows } = await db.sql`
+      SELECT COALESCE(
+        MAX(
+          CAST(SUBSTRING(title FROM '\$begin:math:text$(\\\\d+)\\$end:math:text$$') AS INTEGER)
+        ), 0) AS highest_suffix
       FROM lists
-      WHERE user_id = ${userId} AND title = ${title}
-      LIMIT 1;
+      WHERE user_id = ${userId} AND title LIKE ${title + "%"};
     `;
 
-    const isUnique = existingTitles.length === 0;
+    const highestSuffix = rows[0]?.highest_suffix || 0;
 
-    return new Response(JSON.stringify({ isUnique }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    // If no existing titles match, the title is unique
+    const isUnique = highestSuffix === 0;
+
+    return new Response(
+      JSON.stringify({
+        isUnique,
+        nextSuffix: isUnique ? null : highestSuffix + 1,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
-    console.error("Error checking title:", error);
+    console.error("Error checking title uniqueness:", error);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },

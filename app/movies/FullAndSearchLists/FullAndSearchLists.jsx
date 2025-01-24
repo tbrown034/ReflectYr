@@ -43,11 +43,11 @@ export default function FullAndSearchLists({
           return (
             <li
               key={movie.id}
-              className="flex items-center justify-between p-4 transition-all duration-200 bg-gray-100 rounded-lg shadow-md hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-700"
+              className="flex items-center justify-between p-2 transition-all duration-200 bg-gray-100 rounded-lg shadow-md hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-700"
             >
               <Link
                 href={`/movies/${movie.id}`}
-                className="flex items-center flex-1 gap-4"
+                className="flex items-center flex-1 gap-3"
               >
                 <Image
                   src={`https://image.tmdb.org/t/p/w500${
