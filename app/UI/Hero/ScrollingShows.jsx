@@ -10,7 +10,6 @@ export default async function ScrollingShows() {
   try {
     // Fetch popular TV shows (US shows only, via API helper)
     shows = await fetchPopularTVShows(1); // Fetch page 1 of popular TV shows
-    console.log("US TV Shows fetched:", shows);
   } catch (error) {
     console.error("Error in ScrollingShows component:", error.message);
     errorMessage = error.message;

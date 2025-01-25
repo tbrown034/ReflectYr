@@ -9,7 +9,7 @@ import {
   removeMovie,
   moveUp,
   moveDown,
-} from "@/app/helpers/listcontrols";
+} from "@/app/helpers/listControls";
 
 export default function ListWrapper({ movies, currentPage }) {
   const [userList, setUserList] = useState([]);

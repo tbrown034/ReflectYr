@@ -10,7 +10,6 @@ export default async function ScrollingMovies() {
   try {
     // Fetch the most popular movies for 2024 (default year)
     movies = await fetchDiscoverMovies(1); // Page 1 by default
-    console.log("Movies fetched:", movies);
   } catch (error) {
     console.error("Error in PopularMovies component:", error.message);
     errorMessage = error.message;

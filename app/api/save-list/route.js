@@ -1,3 +1,4 @@
+// app/api/save-list/route.js
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
 
@@ -66,13 +67,19 @@ export async function POST(req) {
     console.log("List created with ID:", list.list_id);
 
     // Insert the movies into the `list_items` table
-    const movieInsertQueries = movies.map(
-      (movie, index) =>
-        db.sql`
+    const movieInsertQueries = movies.map((movie, index) => {
+      // Ensure that each movie has an 'id' property
+      if (!movie.id) {
+        throw new Error(
+          `Movie at index ${index} is missing the 'id' property.`
+        );
+      }
+
+      return db.sql`
         INSERT INTO list_items (list_id, tmdb_id, position, created_at)
-        VALUES (${list.list_id}, ${movie.tmdb_id}, ${index + 1}, NOW());
-      `
-    );
+        VALUES (${list.list_id}, ${movie.id}, ${index + 1}, NOW());
+      `;
+    });
 
     await Promise.all(movieInsertQueries);
     console.log("Movies inserted into list_items table.");
@@ -84,6 +91,11 @@ export async function POST(req) {
     );
   } catch (error) {
     console.error("Error saving list:", error);
+    // Handle specific errors
+    if (error.code === "23502") {
+      // Not-null violation
+      return new Response("Missing required movie ID.", { status: 400 });
+    }
     return new Response("Internal Server Error", { status: 500 });
   }
 }

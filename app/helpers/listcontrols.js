@@ -1,4 +1,4 @@
-// listcontrols.js
+// listControls.js
 
 // Add a movie to the user list
 export const addToUserList = (userList, setUserList, movie) => {
@@ -67,79 +67,4 @@ export const handleClear = (setUserList) => {
 
   // Clear all temporary list data from localStorage
   localStorage.setItem("userList", "[]");
-};
-
-// Save the user's list to the database
-export const saveToDB = async ({
-  listTitle,
-  movies,
-  allowSave,
-  setSuggestedTitle,
-  router,
-}) => {
-  if (!allowSave) {
-    alert("Saving is not allowed.");
-    return;
-  }
-
-  try {
-    // Step 1: Check if the title is unique
-    const titleCheckResponse = await fetch("/api/check-title", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: listTitle }),
-    });
-
-    const { isUnique, nextSuffix } = await titleCheckResponse.json();
-
-    if (!titleCheckResponse.ok) {
-      alert("Error checking title uniqueness. Please try again.");
-      return;
-    }
-
-    // Step 2: Handle title conflicts
-    if (!isUnique) {
-      const suggested = `${listTitle} (${nextSuffix})`;
-      setSuggestedTitle(suggested);
-
-      const confirmed = confirm(
-        `The title "${listTitle}" already exists. Save as "${suggested}"?`
-      );
-
-      if (!confirmed) return; // User cancels
-    } else {
-      setSuggestedTitle(null);
-      const confirmed = confirm(`Do you want to save "${listTitle}"?`);
-      if (!confirmed) return; // User cancels
-    }
-
-    // Step 3: Prepare the payload
-    const finalTitle = isUnique ? listTitle : `${listTitle} (${nextSuffix})`;
-    const payload = {
-      title: finalTitle,
-      movies: movies.map((movie, index) => ({
-        tmdb_id: movie.id,
-        position: index + 1,
-      })),
-    };
-
-    // Step 4: Save the list to the database
-    const saveResponse = await fetch("/api/save-list", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (saveResponse.ok) {
-      const { listId } = await saveResponse.json();
-      alert(`List saved successfully! List ID: ${listId}`);
-      router.push("/profile"); // Redirect to profile after saving
-    } else {
-      const errorMessage = await saveResponse.text();
-      alert(`Failed to save the list. Error: ${errorMessage}`);
-    }
-  } catch (error) {
-    console.error("Error saving list:", error);
-    alert("An error occurred while saving. Please try again.");
-  }
 };

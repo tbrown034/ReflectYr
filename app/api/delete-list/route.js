@@ -3,7 +3,6 @@ import { auth } from "@/auth";
 
 export async function DELETE(req) {
   try {
-    console.log("Processing DELETE request...");
     // Authenticate the user
     const session = await auth();
     if (!session?.user) {
