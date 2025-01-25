@@ -30,7 +30,9 @@ export const saveToDB = async ({ listTitle, movies, allowSave, router }) => {
 
     // Success => parse JSON
     const { listId } = await response.json();
-    alert(`List saved successfully! List ID: ${listId}`);
+    alert(
+      `List saved successfully! List ID: ${listId} and name ID: ${listTitle}`
+    );
     router.push("/profile");
   } catch (error) {
     console.error("Error saving list:", error);

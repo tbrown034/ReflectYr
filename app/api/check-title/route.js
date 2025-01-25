@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 
 export async function POST(req) {
   try {
+    // Authenticate the user
     const session = await auth();
     if (!session?.user) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
@@ -14,25 +15,33 @@ export async function POST(req) {
     const { title } = await req.json();
     const userId = session.user.id;
 
-    // Query for existing titles with the same base pattern
-    const { rows } = await db.sql`
-      SELECT COALESCE(
-        MAX(
-          CAST(SUBSTRING(title FROM '\$begin:math:text$(\\\\d+)\\$end:math:text$$') AS INTEGER)
-        ), 0) AS highest_suffix
+    // Query for existing titles matching the base pattern
+    const rows = await db.sql`
+      SELECT title
       FROM lists
       WHERE user_id = ${userId} AND title LIKE ${title + "%"};
     `;
 
-    const highestSuffix = rows[0]?.highest_suffix || 0;
+    // Determine the highest numeric suffix
+    let maxSuffix = 0;
+    const regex = /\((\d+)\)$/;
 
-    // If no existing titles match, the title is unique
-    const isUnique = highestSuffix === 0;
+    rows.forEach((row) => {
+      const match = row.title.match(regex);
+      if (match) {
+        maxSuffix = Math.max(maxSuffix, parseInt(match[1], 10));
+      }
+    });
 
+    // Generate a unique title
+    const nextSuffix = maxSuffix + 1;
+    const uniqueTitle = maxSuffix === 0 ? title : `${title} (${nextSuffix})`;
+
+    // Return the unique title
     return new Response(
       JSON.stringify({
-        isUnique,
-        nextSuffix: isUnique ? null : highestSuffix + 1,
+        isUnique: maxSuffix === 0,
+        uniqueTitle,
       }),
       {
         status: 200,
@@ -41,6 +50,7 @@ export async function POST(req) {
     );
   } catch (error) {
     console.error("Error checking title uniqueness:", error);
+
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },

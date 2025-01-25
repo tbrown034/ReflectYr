@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 // Import your helper to format the date
 import { formatDate } from "@/app/helpers/dateHelpers"; // adjust path as needed
 
@@ -12,6 +12,9 @@ export default function Title({
 }) {
   // Local "draft" state for the title while editing
   const [tempTitle, setTempTitle] = useState(listTitle);
+
+  // Ref to track if the Cancel button was clicked
+  const cancelClickedRef = useRef(false);
 
   // On entering edit mode, reset tempTitle to the current parent's title
   useEffect(() => {
@@ -45,7 +48,7 @@ export default function Title({
     );
   }
 
-  // If editing, show input + "Save Title" / "Cancel" / (optional) "Clear"
+  // If editing, show input + "Save Title" / "Cancel"
   return (
     <div className="flex flex-col items-center w-full max-w-2xl gap-2 mx-auto">
       <input
@@ -61,8 +64,13 @@ export default function Title({
           }
         }}
         onBlur={() => {
-          // Clicking outside => revert/cancel
-          setIsTitleEditing(false);
+          if (!cancelClickedRef.current) {
+            // Save on blur if Cancel wasn't clicked
+            onTitleChange(tempTitle);
+            setIsTitleEditing(false);
+          }
+          // Reset the ref for future edits
+          cancelClickedRef.current = false;
         }}
         className="w-full p-2 text-lg font-bold text-center text-black border-2 border-gray-300 rounded-lg shadow-sm focus:border-amber-500 focus:outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         placeholder="Enter a title"
@@ -80,8 +88,12 @@ export default function Title({
         </button>
 
         <button
+          onMouseDown={() => {
+            // Set the ref to true to indicate Cancel was clicked before onBlur
+            cancelClickedRef.current = true;
+          }}
           onClick={() => {
-            // Cancel => revert
+            // Cancel => revert without saving
             setIsTitleEditing(false);
           }}
           className="px-4 py-2 text-sm font-semibold text-gray-700 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
