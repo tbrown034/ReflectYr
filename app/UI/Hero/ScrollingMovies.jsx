@@ -1,17 +1,19 @@
-import { fetchDiscoverMovies } from "@/app/api/movies";
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { fetchDiscoverMovies } from "@/app/api/movies";
 
 export default async function ScrollingMovies() {
+  const fixedYear = 2025;
+  console.log("ScrollingMovies using fixed year:", fixedYear);
+
   let movies = [];
   let errorMessage = null;
 
   try {
-    // Fetch the most popular movies for 2024 (default year)
-    movies = await fetchDiscoverMovies(1); // Page 1 by default
+    movies = await fetchDiscoverMovies(1, fixedYear);
   } catch (error) {
-    console.error("Error in PopularMovies component:", error.message);
+    console.error("Error in ScrollingMovies component:", error.message);
     errorMessage = error.message;
   }
 
@@ -24,43 +26,16 @@ export default async function ScrollingMovies() {
     );
   }
 
-  // Duplicate for continuous scroll
   const doubledMovies = [...movies, ...movies];
 
   return (
-    <div className="">
-      <div className="flex items-center justify-between gap-8 mb-4">
-        {/* Single badge for "Popular Movies" */}
-        <h2 className="text-xl font-bold">
-          <span className="inline-block px-3 py-1 text-sm font-semibold text-black rounded-full bg-amber-500">
-            Popular Movies
-          </span>
-        </h2>
+    <div>
+      <h2 className="mb-4 text-xl font-bold">
+        <span className="inline-block px-3 py-1 text-sm font-semibold text-black rounded-full bg-amber-500">
+          Popular Movies
+        </span>
+      </h2>
 
-        {/* “Make Your List!” button */}
-        <Link
-          href="/movies"
-          className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-900 transition border rounded-md shadow border-amber-400 bg-amber-400 hover:bg-amber-500"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-4 h-4"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          Create List
-        </Link>
-      </div>
-
-      {/* Add "group" so hover can pause the animation */}
       <div className="relative w-full overflow-hidden group rounded-xl">
         <div className="flex w-[200%] animate-scrollLeft gap-4 sm:gap-8">
           {doubledMovies.map((movie, index) => (
@@ -68,7 +43,6 @@ export default async function ScrollingMovies() {
               key={`${movie.id}-${index}`}
               className="flex-shrink-0 w-24 sm:w-40"
             >
-              {/* Wrap each poster in a Link to /movies/[id] */}
               <Link href={`/movies/${movie.id}`}>
                 <Image
                   src={

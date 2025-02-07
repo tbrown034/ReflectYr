@@ -1,37 +1,32 @@
 "use client";
 
 import { Listbox, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import { useYear } from "@/app/context/YearContext";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
-const YearPicker = ({
-  initialYear = new Date().getFullYear(),
-  onYearChange,
-}) => {
-  // Generate a range of years (e.g., 2010 - current year)
+const YearPicker = () => {
+  const { selectedYear, setSelectedYear } = useYear();
   const currentYear = new Date().getFullYear();
+  // Create a range from 2000 to currentYear, reversed so the latest years appear first
   const yearRange = Array.from(
     { length: currentYear - 2000 + 1 },
     (_, i) => 2000 + i
   ).reverse();
 
-  // State to track the selected year
-  const [selectedYear, setSelectedYear] = useState(initialYear);
-
-  // Handle year selection
   const handleYearChange = (year) => {
     setSelectedYear(year);
-    if (onYearChange) {
-      onYearChange(year); // Pass the selected year to parent component
-    }
+    console.log("Year changed to:", year);
   };
 
   return (
     <div className="w-40">
       <Listbox value={selectedYear} onChange={handleYearChange}>
         <div className="relative">
-          {/* Selected Year (Button) */}
-          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-sm font-medium text-left bg-gray-100 border border-gray-300 rounded-lg shadow-md cursor-default dark:bg-gray-800 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+          <Listbox.Button
+            as="button"
+            className="relative w-full py-2 pl-3 pr-10 text-sm font-medium text-left bg-gray-100 border border-gray-300 rounded-lg shadow-md cursor-default dark:bg-gray-800 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          >
             <span className="block truncate">{selectedYear}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
               <ChevronUpDownIcon
@@ -40,8 +35,6 @@ const YearPicker = ({
               />
             </span>
           </Listbox.Button>
-
-          {/* Dropdown Options */}
           <Transition
             as={Fragment}
             leave="transition ease-in duration-100"
@@ -51,7 +44,8 @@ const YearPicker = ({
             <Listbox.Options className="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-lg shadow-lg max-h-60 dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {yearRange.map((year) => (
                 <Listbox.Option
-                  key={year}
+                  key={`year-${year}`}
+                  value={year}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                       active
@@ -59,7 +53,6 @@ const YearPicker = ({
                         : "text-gray-900 dark:text-gray-200"
                     }`
                   }
-                  value={year}
                 >
                   {({ selected }) => (
                     <>

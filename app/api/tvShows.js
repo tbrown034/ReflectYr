@@ -1,24 +1,19 @@
-// Location: app/api/tvShows.js
-// Type: Helper file
-// Purpose: Encapsulates TMDB API calls for TV shows.
-
 const baseUrl = "https://api.themoviedb.org/3";
-const apiKey = process.env.TMDM_API_KEY; // Ensure your API key is set in .env
-const tvYear = 2024; // Default release year filter
-const language = "en-US"; // Language filter
-const includeAdult = false; // Exclude adult content
-const originCountry = "US"; // Restrict to US-origin shows
+const apiKey = process.env.TMDM_API_KEY;
+const language = "en-US";
+const includeAdult = false;
+const originCountry = "US";
 
 // Fetch TV shows using the "Discover" endpoint
-export async function fetchDiscoverTVShows(page, year = tvYear) {
-  const sortBy = "vote_count.desc"; // Sort by vote count (popularity)
-  const startDate = `${year}-01-01`; // Start of the year
-  const endDate = `${year}-12-31`; // End of the year
+export async function fetchDiscoverTVShows(page, year = 2024) {
+  const sortBy = "vote_count.desc";
+  const startDate = `${year}-01-01`;
+  const endDate = `${year}-12-31`;
 
   const url =
     `${baseUrl}/discover/tv?air_date.gte=${startDate}&air_date.lte=${endDate}` +
     `&sort_by=${sortBy}&language=${language}&page=${page}&include_adult=${includeAdult}` +
-    `&with_origin_country=${originCountry}`; // Restrict to US shows
+    `&with_origin_country=${originCountry}`;
 
   const response = await fetch(url, {
     headers: { Authorization: `Bearer ${apiKey}` },
@@ -33,15 +28,15 @@ export async function fetchDiscoverTVShows(page, year = tvYear) {
 }
 
 // Fetch search results for TV shows
-export async function fetchSearchTVShows(query, page, year = tvYear) {
-  const startDate = `${year}-01-01`; // Start of the year
-  const endDate = `${year}-12-31`; // End of the year
+export async function fetchSearchTVShows(query, page, year = 2024) {
+  const startDate = `${year}-01-01`;
+  const endDate = `${year}-12-31`;
 
   const url =
     `${baseUrl}/search/tv?query=${encodeURIComponent(query)}` +
     `&air_date.gte=${startDate}&air_date.lte=${endDate}` +
     `&language=${language}&page=${page}&include_adult=${includeAdult}` +
-    `&with_origin_country=${originCountry}`; // Restrict to US shows
+    `&with_origin_country=${originCountry}`;
 
   const response = await fetch(url, {
     headers: { Authorization: `Bearer ${apiKey}` },
@@ -74,15 +69,15 @@ export async function fetchTVShowDetails(tvShowId) {
 }
 
 // Fetch popular TV shows using the "Discover" endpoint with advanced filtering
-export async function fetchPopularTVShows(page = 1, year = tvYear) {
-  const startDate = `${year}-01-01`; // Start of the year
-  const endDate = `${year}-12-31`; // End of the year
-  const sortBy = "popularity.desc"; // Sort by popularity
+export async function fetchPopularTVShows(page = 1, year = 2024) {
+  const startDate = `${year}-01-01`;
+  const endDate = `${year}-12-31`;
+  const sortBy = "popularity.desc";
 
   const url =
     `${baseUrl}/discover/tv?air_date.gte=${startDate}&air_date.lte=${endDate}` +
     `&sort_by=${sortBy}&language=${language}&page=${page}&include_adult=${includeAdult}` +
-    `&with_origin_country=${originCountry}`; // Restrict to US shows
+    `&with_origin_country=${originCountry}`;
 
   const response = await fetch(url, {
     headers: { Authorization: `Bearer ${apiKey}` },

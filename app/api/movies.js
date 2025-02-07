@@ -1,19 +1,14 @@
-// Location: app/api/movies.js
-// Type: Helper file
-// Purpose: Encapsulates TMDB API calls for reuse across components.
-
 const baseUrl = "https://api.themoviedb.org/3";
 const apiKey = process.env.TMDM_API_KEY;
-const movieYear = 2024; // Release year filter
-const language = "en-US"; // Language filter
-const includeAdult = false; // Exclude adult content
+const language = "en-US";
+const includeAdult = false;
 
 // Fetch movies using the "Discover" endpoint
-export async function fetchDiscoverMovies(page) {
+export async function fetchDiscoverMovies(page, year = 2024) {
   const sortBy = "vote_count.desc";
 
   const url =
-    `${baseUrl}/discover/movie?primary_release_year=${movieYear}` +
+    `${baseUrl}/discover/movie?primary_release_year=${year}` +
     `&sort_by=${sortBy}&language=${language}&page=${page}&include_adult=${includeAdult}`;
 
   const response = await fetch(url, {
@@ -29,10 +24,10 @@ export async function fetchDiscoverMovies(page) {
 }
 
 // Fetch search results for movies
-export async function fetchSearchResults(query, page) {
+export async function fetchSearchResults(query, page, year = 2024) {
   const url =
     `${baseUrl}/search/movie?query=${encodeURIComponent(query)}` +
-    `&primary_release_year=${movieYear}&language=${language}&page=${page}&include_adult=${includeAdult}`;
+    `&primary_release_year=${year}&language=${language}&page=${page}&include_adult=${includeAdult}`;
 
   const response = await fetch(url, {
     headers: { Authorization: `Bearer ${apiKey}` },
