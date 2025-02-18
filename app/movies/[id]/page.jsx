@@ -1,5 +1,5 @@
 import { fetchDiscoverMovies, fetchSearchResults } from "@/app/api/movies";
-import ListWrapper from "./ListsWrapper";
+import ListWrapper from "../ListsWrapper";
 
 export default async function MoviesPage({
   searchParams: searchParamsPromise,
