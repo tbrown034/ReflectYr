@@ -1,4 +1,4 @@
-// listControls.js
+// listControls.js - fixed title
 
 // Add a movie to the user list
 export const addToUserList = (userList, setUserList, movie) => {
