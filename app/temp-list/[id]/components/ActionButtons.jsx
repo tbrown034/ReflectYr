@@ -1,7 +1,5 @@
 "use client";
 
-import { handleClear } from "@/app/helpers/listHelpers";
-
 export default function ActionButtons({
   router,
   isListEditing,

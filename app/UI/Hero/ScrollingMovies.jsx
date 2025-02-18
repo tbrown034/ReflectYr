@@ -5,7 +5,6 @@ import { fetchDiscoverMovies } from "@/app/api/movies";
 
 export default async function ScrollingMovies() {
   const fixedYear = 2025;
-  console.log("ScrollingMovies using fixed year:", fixedYear);
 
   let movies = [];
   let errorMessage = null;
