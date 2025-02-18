@@ -8,7 +8,7 @@ import Image from "next/image";
 // Components
 import Title from "./components/Title";
 import ActionButtons from "./components/ActionButtons";
-import UserListControls from "@/app/ui/components/UserListControls";
+import UserListControls from "@/app/UI/components/UserListControls";
 
 // Helpers
 import { saveToDB } from "@/app/util/utilities";
@@ -20,7 +20,6 @@ import {
 } from "@/app/helpers/listHelpers";
 
 export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
-  // Local states
   const [movies, setMovies] = useState([]);
   const [listTitle, setListTitle] = useState(initialTitle);
 
