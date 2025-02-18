@@ -17,7 +17,7 @@ import {
   moveUp,
   moveDown,
   handleClear,
-} from "@/app/helpers/listControls";
+} from "@/app/helpers/listHelpers";
 
 export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
   // Local states

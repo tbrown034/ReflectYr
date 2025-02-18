@@ -1,5 +1,3 @@
-// listControls.js - fixed title
-
 // Add a movie to the user list
 export const addToUserList = (userList, setUserList, movie) => {
   const updatedList = [...userList, movie];
@@ -37,8 +35,6 @@ export const moveDown = (index, userList, setUserList) => {
   setUserList(updatedList);
   localStorage.setItem("userList", JSON.stringify(updatedList));
 };
-
-// listcontrols.js
 
 // Finalize the user list (save and redirect)
 export const handleFinalize = (userList, router) => {

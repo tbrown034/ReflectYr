@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { handleFinalize, handleClear } from "@/app/helpers/listControls"; // Import helper functions
+import { handleFinalize, handleClear } from "@/app/helpers/listHelpers"; // Import helper functions
 
 export default function UserListButtons({ userList, setUserList }) {
   const router = useRouter();

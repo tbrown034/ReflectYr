@@ -1,6 +1,6 @@
 "use client";
 
-import { handleClear } from "@/app/helpers/listControls";
+import { handleClear } from "@/app/helpers/listHelpers";
 
 export default function ActionButtons({
   router,
