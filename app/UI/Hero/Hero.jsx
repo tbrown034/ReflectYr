@@ -6,10 +6,12 @@ import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 import SignIn from "@/app/UI/components/buttons/SignIn";
 import ScrollingMovies from "./ScrollingMovies";
 import ScrollingShows from "./ScrollingShows";
-import YearHolder from "./YearHolder"; // This will hold the year selection + button
+import YearHolder from "./YearHolder"; // This holds the year selection + button
 
-export default async function Hero() {
+export default async function Hero({ searchParams }) {
   const session = await auth();
+  // Read the year from the URL query parameters if provided; default to 2025
+  const year = searchParams?.year ? parseInt(searchParams.year, 10) : 2025;
 
   return (
     <div className="flex flex-col gap-12 p-4">
@@ -40,8 +42,8 @@ export default async function Hero() {
       </div>
 
       {/* Scrolling Movies and Shows */}
-      <ScrollingMovies year={2025} />
-      <ScrollingShows year={2025} />
+      <ScrollingMovies year={year} />
+      <ScrollingShows year={year} />
 
       {/* Year Selection and "Create List" button */}
       <div className="flex items-center justify-center">

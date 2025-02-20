@@ -1,12 +1,26 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import YearPicker from "../components/YearPicker";
 import { useYear } from "@/app/context/YearContext";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 const YearHolder = () => {
   const { selectedYear } = useYear();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Get the current "year" parameter from the URL, default to "2025"
+  const currentYearParam = searchParams.get("year") || "2025";
+
+  useEffect(() => {
+    // If the selected year isn't the same as the URL's, update the URL.
+    if (selectedYear.toString() !== currentYearParam) {
+      router.push(`${pathname}?year=${selectedYear}`);
+    }
+  }, [selectedYear, currentYearParam, pathname, router]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-6 bg-gray-800 rounded-lg shadow-md">

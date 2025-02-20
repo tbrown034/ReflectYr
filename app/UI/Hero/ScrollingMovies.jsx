@@ -3,14 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { fetchDiscoverMovies } from "@/app/api/movies";
 
-export default async function ScrollingMovies() {
-  const fixedYear = 2025;
-
+export default async function ScrollingMovies({ year = 2025 }) {
   let movies = [];
   let errorMessage = null;
 
   try {
-    movies = await fetchDiscoverMovies(1, fixedYear);
+    movies = await fetchDiscoverMovies(1, year);
   } catch (error) {
     console.error("Error in ScrollingMovies component:", error.message);
     errorMessage = error.message;

@@ -1,19 +1,14 @@
-// app/UI/Hero/ScrollingShows.jsx
-
 import { fetchPopularTVShows } from "@/app/api/tvShows";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 
-export default async function ScrollingShows() {
-  const fixedYear = 2025;
-  console.log("ScrollingShows using fixed year:", fixedYear);
-
+export default async function ScrollingShows({ year = 2025 }) {
   let shows = [];
   let errorMessage = null;
 
   try {
-    shows = await fetchPopularTVShows(1, fixedYear);
+    shows = await fetchPopularTVShows(1, year);
   } catch (error) {
     console.error("Error in ScrollingShows component:", error.message);
     errorMessage = error.message;

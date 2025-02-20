@@ -1,12 +1,17 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { useYear } from "@/app/context/YearContext";
 
 const HeaderNavBar = () => {
+  const { selectedYear } = useYear();
+
   return (
-    <ul className="flex gap-6 text-lg font-semibold ">
+    <ul className="flex gap-6 text-lg font-semibold">
       <Link
         className="hover:font-bold hover:underline-offset-2 hover:underline"
-        href="/movies"
+        href={`/movies?year=${selectedYear}`}
       >
         Movies
       </Link>
@@ -22,9 +27,6 @@ const HeaderNavBar = () => {
       >
         About
       </Link>
-      {/* <Link className=" hover:underline underline-offset-2" href="/music">
-        Music
-      </Link> */}
     </ul>
   );
 };
