@@ -70,7 +70,7 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
 
   return (
     <div className="flex flex-col items-center gap-6 p-4">
-      {/* Title with its own “edit title” logic */}
+      {/* Title Section */}
       <Title
         listTitle={listTitle}
         onTitleChange={setListTitle}
@@ -78,49 +78,52 @@ export default function BaseList({ temporaryListId, initialTitle, allowSave }) {
         setIsTitleEditing={setIsTitleEditing}
       />
 
-      <div className="w-full">
-        <ul className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {movies.map((movie, index) => (
-            <li
-              key={movie.id}
-              className="relative flex flex-col items-center p-4 bg-white rounded-lg shadow-lg dark:bg-gray-700"
+      {/* Movie List */}
+      <ul className="flex flex-wrap justify-center gap-4 ">
+        {movies.map((movie, index) => (
+          <li
+            key={movie.id}
+            className="relative flex flex-col items-center w-40 p-3 bg-gray-700 rounded-lg shadow-md dark:bg-gray-800 sm:w-48"
+          >
+            {/* Ranking Number */}
+            <div className="absolute flex items-center justify-center text-sm font-bold text-white bg-blue-500 rounded-full w-7 h-7 left-2 top-2">
+              {index + 1}
+            </div>
+
+            {/* Movie Poster */}
+            <Link
+              href={`/movies/${movie.id}`}
+              className="flex flex-col items-center gap-2"
             >
-              {/* Ranking Number */}
-              <div className="absolute flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-blue-500 rounded-full left-2 top-2 sm:h-10 sm:w-10 sm:text-lg">
-                {index + 1}
+              <div className="w-32 h-48 overflow-hidden rounded-md shadow-md sm:w-40 sm:h-60">
+                <Image
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  alt={movie.title}
+                  width={160}
+                  height={240}
+                  className="object-cover w-full h-full"
+                />
               </div>
 
-              <Link href={`/movies/${movie.id}`}>
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-32 h-48 overflow-hidden rounded-md shadow-md sm:h-60 sm:w-40">
-                    <Image
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      alt={movie.title}
-                      width={150}
-                      height={225}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                  <p className="p-2 text-sm font-semibold text-center text-gray-800 dark:text-gray-200 sm:text-base">
-                    {movie.title}
-                  </p>
-                </div>
-              </Link>
+              {/* Movie Title */}
+              <p className="text-sm font-semibold text-center text-gray-300 sm:text-base">
+                {movie.title}
+              </p>
+            </Link>
 
-              {/* Show reorder/remove controls only if isListEditing */}
-              {isListEditing && (
-                <UserListControls
-                  onMoveUp={() => handleMoveUp(index)}
-                  onMoveDown={() => handleMoveDown(index)}
-                  onRemove={() => handleRemove(index)}
-                />
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+            {/* Edit Controls */}
+            {isListEditing && (
+              <UserListControls
+                onMoveUp={() => handleMoveUp(index)}
+                onMoveDown={() => handleMoveDown(index)}
+                onRemove={() => handleRemove(index)}
+              />
+            )}
+          </li>
+        ))}
+      </ul>
 
-      {/* Bottom action buttons: toggles only isListEditing */}
+      {/* Bottom action buttons */}
       <ActionButtons
         router={router}
         isListEditing={isListEditing}
